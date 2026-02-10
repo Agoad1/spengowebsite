@@ -11,8 +11,8 @@ export default function Hero() {
           className="max-w-4xl"
         >
           <h1 className="font-syne font-extrabold tracking-headline text-white text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
-            Your website is the only thing between{' '}
-            <span className="text-cyan">paid</span> and the{' '}
+            Your website is the single barrier between{' '}
+            <span className="text-cyan">a conversion</span> and the{' '}
             <span className="text-cyan">back button</span>.
           </h1>
 
@@ -22,8 +22,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-8 text-lg text-muted max-w-[640px] leading-[1.7]"
           >
-            AI changed how people buy. They ask, they click, they decide in seconds.
-            We build websites that earn trust instantly — and convert before they leave.
+            AI destroyed the way people browse. They ask, they click, and they judge in seconds.
+            We build websites that command trust instantly. We convert them before they slip away.
           </motion.p>
 
           <motion.div
@@ -46,7 +46,7 @@ export default function Hero() {
               href="#process"
               className="text-muted hover:text-body transition-colors text-sm"
             >
-              See How It Works &darr;
+              The Process &darr;
             </a>
           </motion.div>
 
@@ -56,7 +56,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.7 }}
             className="mt-12 text-xs text-muted/70"
           >
-            Trusted by founders and small businesses ready to compete in the AI era.
+            Trusted by founders who refuse to be left behind in the AI era.
           </motion.p>
         </motion.div>
       </div>

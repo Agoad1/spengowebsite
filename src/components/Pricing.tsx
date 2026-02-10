@@ -4,7 +4,6 @@ import { Check } from 'lucide-react';
 const plans = [
   {
     name: 'Starter',
-    price: '$1,500',
     description: 'Perfect for simple, high-converting landing pages.',
     features: [
       '1 page (landing page)',
@@ -17,7 +16,6 @@ const plans = [
   },
   {
     name: 'Growth',
-    price: '$3,500',
     description: 'Full website build for businesses ready to convert.',
     features: [
       'Up to 5 pages',
@@ -30,7 +28,6 @@ const plans = [
   },
   {
     name: 'Scale',
-    price: '$6,000+',
     description: 'For businesses that need a full conversion system.',
     features: [
       'Unlimited pages',
@@ -63,9 +60,9 @@ export default function Pricing() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">Transparent Pricing</p>
+          <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">Service Plans</p>
           <h2 className="font-syne font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
-            No surprises. Pick what fits.
+            Standardized packages. Custom results.
           </h2>
         </motion.div>
 
@@ -80,21 +77,17 @@ export default function Pricing() {
             <motion.div
               key={plan.name}
               variants={cardVariants}
-              className={`rounded-2xl border p-8 md:p-10 backdrop-blur-sm transition-colors duration-300 ${
-                plan.highlighted
-                  ? 'border-cyan/30 bg-cyan/[0.03] hover:border-cyan/50'
-                  : 'border-card-border bg-card hover:border-cyan/10'
-              }`}
+              className={`rounded-2xl border p-8 md:p-10 backdrop-blur-sm transition-colors duration-300 ${plan.highlighted
+                ? 'border-cyan/30 bg-cyan/[0.03] hover:border-cyan/50'
+                : 'border-card-border bg-card hover:border-cyan/10'
+                }`}
             >
               {plan.highlighted && (
                 <span className="inline-block text-[11px] font-medium text-cyan bg-cyan/10 px-3 py-1 rounded-full mb-5 uppercase tracking-wider">
                   Recommended
                 </span>
               )}
-              <h3 className="font-syne font-bold text-white text-xl">{plan.name}</h3>
-              <div className="mt-3 mb-2">
-                <span className="font-syne font-extrabold text-white text-4xl tracking-headline">{plan.price}</span>
-              </div>
+              <h3 className="font-syne font-bold text-white text-xl mb-4">{plan.name}</h3>
               <p className="text-muted text-[15px] leading-[1.7] mb-8">{plan.description}</p>
               <ul className="space-y-3 mb-10">
                 {plan.features.map((feature) => (
@@ -108,13 +101,12 @@ export default function Pricing() {
                 href="#start"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className={`inline-flex items-center justify-center w-full py-3 rounded-lg font-dm font-semibold text-sm transition-all duration-200 ${
-                  plan.highlighted
-                    ? 'bg-cyan text-bg hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]'
-                    : 'border border-cyan/20 text-cyan hover:border-cyan/40'
-                }`}
+                className={`inline-flex items-center justify-center w-full py-3 rounded-lg font-dm font-semibold text-sm transition-all duration-200 ${plan.highlighted
+                  ? 'bg-cyan text-bg hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]'
+                  : 'border border-cyan/20 text-cyan hover:border-cyan/40'
+                  }`}
               >
-                Get Started
+                Inquire Now
               </motion.a>
             </motion.div>
           ))}
@@ -127,7 +119,7 @@ export default function Pricing() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-10 text-center text-muted text-sm"
         >
-          Need something custom? Start a project and tell us what you need — we'll scope it for you.
+          Need something custom? Start a project and tell us what you need. We will scope it for you.
         </motion.p>
       </div>
     </section>

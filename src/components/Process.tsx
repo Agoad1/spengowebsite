@@ -4,22 +4,22 @@ const steps = [
   {
     num: '01',
     title: 'Submit Your Project',
-    body: 'Fill out a quick form with your goals, current site (if any), and what you need. No calls, no fluff.',
+    body: 'Fill out a quick form with your goals and your current site. No calls. No fluff.',
   },
   {
     num: '02',
     title: 'We Scope & Plan',
-    body: "We review everything and send you a clear proposal — what we'll build, timeline, and price. You approve, we start.",
+    body: "We review everything and send you a clear proposal. We define the build, the timeline, and the price. You approve, we start.",
   },
   {
     num: '03',
     title: 'Design & Build',
-    body: 'We design and develop your site with check-ins along the way. You see progress, give feedback, we iterate.',
+    body: 'We design and develop your site with regular check-ins. You see progress, give feedback, and we iterate.',
   },
   {
     num: '04',
     title: 'Launch & Optimize',
-    body: 'Your new site goes live. We make sure everything is fast, functional, and ready to convert.',
+    body: 'Your new site goes live. We ensure everything is fast, functional, and ready to convert.',
   },
 ];
 

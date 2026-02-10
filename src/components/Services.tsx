@@ -5,7 +5,7 @@ const services = [
   {
     title: 'Website Builds',
     description:
-      'Starting from scratch? We design and develop conversion-focused websites engineered for the AI era. Clear messaging, fast load times, trust-first design — built to turn visitors into buyers.',
+      'Starting from scratch? We design and develop conversion-focused websites engineered for the AI era. Clear messaging, fast load times, and trust-first design. We build sites that turn visitors into buyers.',
     features: [
       'Custom design, no templates',
       'Structured for AI search visibility',
@@ -16,7 +16,7 @@ const services = [
   {
     title: 'Website Upgrades',
     description:
-      "Already have a site? We rebuild and optimize it into a trust-and-conversion hub. Same brand, sharper execution — designed to compete in a market where attention spans are measured in seconds.",
+      "Already have a site? We rebuild and optimize it into a trust-and-conversion hub. Same brand, sharper execution. Designed to win in a market where attention spans are measured in seconds.",
     features: [
       'Full UX and conversion audit',
       'Redesign key pages for clarity and trust',

@@ -15,9 +15,9 @@ export default function FinalCTA() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-syne font-extrabold text-white text-[clamp(2rem,4.5vw,3.25rem)] tracking-headline leading-[1.1]">
-            Your next customer is one click away from choosing you — or leaving.
+            Your next customer is one click away from choosing you. Or leaving forever.
           </h2>
-          <p className="mt-6 text-muted text-lg">Make sure your site earns the click.</p>
+          <p className="mt-6 text-muted text-lg">Ensure your site earns that click.</p>
           <motion.a
             href="#start"
             whileHover={{ scale: 1.03 }}

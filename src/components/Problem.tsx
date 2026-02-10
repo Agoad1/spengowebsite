@@ -5,17 +5,17 @@ const cards = [
   {
     icon: Zap,
     title: 'Attention is compressed',
-    body: "AI gives one answer, one link. Visitors arrive ready to decide — not to explore. If your site doesn't convert instantly, you're invisible.",
+    body: "AI gives one answer. One link. Visitors arrive ready to decide. They aren't here to browse. If your site doesn't work instantly, you're invisible.",
   },
   {
     icon: ShieldCheck,
     title: 'Trust is the new filter',
-    body: "Outdated, slow, generic sites get filtered out before a buyer even reads a word. First impressions are now the only impression.",
+    body: "Outdated, slow, or generic sites get filtered out before a buyer reads a single word. First impressions are the only impressions.",
   },
   {
     icon: Layers,
     title: "One homepage isn't enough",
-    body: "Every offer, campaign, and audience needs its own page. The landing page economy is here — and most businesses haven't caught up.",
+    body: "Every offer, campaign, and audience needs its own page. The landing page economy is here. Most businesses haven't caught up.",
   },
 ];
 
