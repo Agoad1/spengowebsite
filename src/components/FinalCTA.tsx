@@ -14,7 +14,7 @@ export default function FinalCTA() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="font-syne font-extrabold text-white text-[clamp(2rem,4.5vw,3.25rem)] tracking-headline leading-[1.1]">
+          <h2 className="font-outfit font-extrabold text-white text-[clamp(2rem,4.5vw,3.25rem)] tracking-headline leading-[1.1]">
             Your next customer is one click away from choosing you. Or leaving forever.
           </h2>
           <p className="mt-6 text-muted text-lg">Ensure your site earns that click.</p>
@@ -22,7 +22,7 @@ export default function FinalCTA() {
             href="#start"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 mt-10 bg-cyan text-bg font-dm font-semibold px-8 py-4 rounded-lg text-base transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]"
+            className="inline-flex items-center gap-2 mt-10 bg-cyan text-bg font-jakarta font-semibold px-8 py-4 rounded-lg text-base transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]"
           >
             Start Your Project
             <span aria-hidden="true">&rarr;</span>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import MagneticButton from './MagneticButton';
 
 const plans = [
   {
@@ -61,7 +62,7 @@ export default function Pricing() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">Service Plans</p>
-          <h2 className="font-syne font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
+          <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
             Standardized packages. Custom results.
           </h2>
         </motion.div>
@@ -77,37 +78,35 @@ export default function Pricing() {
             <motion.div
               key={plan.name}
               variants={cardVariants}
-              className={`rounded-2xl border p-8 md:p-10 backdrop-blur-sm transition-colors duration-300 ${plan.highlighted
-                ? 'border-cyan/30 bg-cyan/[0.03] hover:border-cyan/50'
-                : 'border-card-border bg-card hover:border-cyan/10'
+              whileHover={{ y: -5 }}
+              className={`glass-card rounded-3xl p-8 md:p-10 transition-all duration-300 relative overflow-hidden group ${plan.highlighted ? 'ring-1 ring-cyan/30' : ''
                 }`}
             >
               {plan.highlighted && (
-                <span className="inline-block text-[11px] font-medium text-cyan bg-cyan/10 px-3 py-1 rounded-full mb-5 uppercase tracking-wider">
-                  Recommended
-                </span>
+                <div className="absolute top-0 right-0">
+                  <div className="bg-cyan text-bg text-[10px] font-bold py-1 px-4 rounded-bl-xl uppercase tracking-widest">
+                    Best Value
+                  </div>
+                </div>
               )}
-              <h3 className="font-syne font-bold text-white text-xl mb-4">{plan.name}</h3>
-              <p className="text-muted text-[15px] leading-[1.7] mb-8">{plan.description}</p>
-              <ul className="space-y-3 mb-10">
+              <h3 className="font-outfit font-bold text-white text-2xl mb-4 tracking-tight">{plan.name}</h3>
+              <p className="text-muted text-[15px] leading-relaxed mb-8">{plan.description}</p>
+              <ul className="space-y-4 mb-10">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-body text-[15px]">
-                    <Check className="w-4 h-4 text-cyan mt-0.5 shrink-0" />
+                  <li key={feature} className="flex items-start gap-3 text-body/90 text-[14px]">
+                    <Check className="w-4 h-4 text-cyan mt-1 shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-              <motion.a
-                href="#start"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className={`inline-flex items-center justify-center w-full py-3 rounded-lg font-dm font-semibold text-sm transition-all duration-200 ${plan.highlighted
-                  ? 'bg-cyan text-bg hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]'
-                  : 'border border-cyan/20 text-cyan hover:border-cyan/40'
-                  }`}
-              >
-                Inquire Now
-              </motion.a>
+              <MagneticButton href="#start" className="w-full">
+                <div className={`flex items-center justify-center w-full py-3.5 rounded-xl font-jakarta font-bold text-sm transition-all duration-300 ${plan.highlighted
+                  ? 'bg-cyan text-bg shadow-[0_0_20px_rgba(0,229,255,0.15)] group-hover:shadow-[0_0_30px_rgba(0,229,255,0.25)]'
+                  : 'bg-white/5 text-white border border-white/10 group-hover:border-cyan/30'
+                  }`}>
+                  Inquire Now
+                </div>
+              </MagneticButton>
             </motion.div>
           ))}
         </motion.div>

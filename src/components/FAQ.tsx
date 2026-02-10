@@ -32,7 +32,7 @@ function FAQItem({ item, isOpen, toggle }: { item: typeof faqs[0]; isOpen: boole
         onClick={toggle}
         className="w-full flex items-center justify-between py-6 text-left group"
       >
-        <span className="font-dm font-medium text-white text-base pr-4 group-hover:text-cyan transition-colors duration-200">
+        <span className="font-jakarta font-medium text-white text-base pr-4 group-hover:text-cyan transition-colors duration-200">
           {item.q}
         </span>
         <ChevronDown
@@ -69,7 +69,7 @@ export default function FAQ() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">FAQ</p>
-          <h2 className="font-syne font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1] mb-12">
+          <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1] mb-12">
             Questions? Answered.
           </h2>
         </motion.div>

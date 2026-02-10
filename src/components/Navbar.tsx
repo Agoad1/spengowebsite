@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -11,6 +11,12 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,15 +29,15 @@ export default function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-bg/80 backdrop-blur-xl border-b border-card-border'
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? 'bg-bg/80 backdrop-blur-xl border-b border-card-border'
+        : 'bg-transparent'
+        }`}
     >
+      <motion.div className="scroll-progress" style={{ scaleX }} />
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="font-syne text-xl font-bold text-white tracking-headline">
-          SPENGO
+        <a href="/" className="font-outfit text-2xl font-bold text-white tracking-tighter">
+          SPENGO<span className="text-cyan">.</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">

@@ -44,7 +44,7 @@ export default function Process() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">How It Works</p>
-          <h2 className="font-syne font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
+          <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
             From idea to live in 4 steps.
           </h2>
         </motion.div>
@@ -54,24 +54,23 @@ export default function Process() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="mt-14 grid md:grid-cols-4 gap-6"
+          className="mt-14 grid md:grid-cols-4 gap-4"
         >
-          {steps.map((step, i) => (
+          {steps.map((step) => (
             <motion.div
               key={step.num}
               variants={stepVariants}
-              className="relative rounded-2xl border border-card-border bg-card p-8 backdrop-blur-sm"
+              whileHover={{ y: -5 }}
+              className="relative glass-card rounded-3xl p-8 transition-all duration-300 overflow-hidden"
             >
-              <span className="font-syne font-bold text-cyan/30 text-5xl absolute top-6 right-6 select-none">
+              <div className="absolute -top-4 -right-2 font-outfit font-black text-white/5 text-8xl leading-none pointer-events-none">
                 {step.num}
-              </span>
-              <div className="relative">
-                <h3 className="font-syne font-bold text-white text-lg mb-3 mt-8">{step.title}</h3>
-                <p className="text-muted text-[15px] leading-[1.7]">{step.body}</p>
               </div>
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-card-border" />
-              )}
+              <div className="relative pt-6">
+                <div className="text-cyan text-xs font-bold tracking-widest uppercase mb-4 opacity-50">Step {step.num}</div>
+                <h3 className="font-outfit font-bold text-white text-xl mb-4 tracking-tight">{step.title}</h3>
+                <p className="text-muted text-[14px] leading-relaxed">{step.body}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>

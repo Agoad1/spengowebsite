@@ -18,8 +18,8 @@ export default {
         'card-border': 'rgba(255, 255, 255, 0.06)',
       },
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        dm: ['DM Sans', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
+        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
       },
       letterSpacing: {
         headline: '-0.02em',

@@ -7,10 +7,12 @@ import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
+import CursorGlow from './components/CursorGlow';
 
 export default function App() {
   return (
     <div className="relative z-10 min-h-screen">
+      <CursorGlow />
       <Navbar />
       <Hero />
       <Problem />

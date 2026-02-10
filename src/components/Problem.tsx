@@ -42,7 +42,7 @@ export default function Problem() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">The Shift</p>
-          <h2 className="font-syne font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
+          <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
             The internet doesn&rsquo;t browse anymore.
           </h2>
         </motion.div>
@@ -52,19 +52,20 @@ export default function Problem() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="mt-14 grid md:grid-cols-3 gap-6"
+          className="mt-14 grid md:grid-cols-3 gap-8"
         >
           {cards.map((card) => (
             <motion.div
               key={card.title}
               variants={cardVariants}
-              className="group rounded-2xl border border-card-border bg-card p-8 backdrop-blur-sm hover:border-cyan/10 transition-colors duration-300"
+              whileHover={{ y: -5 }}
+              className="group glass-card rounded-3xl p-8 transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-6">
-                <card.icon className="w-5 h-5 text-cyan" />
+              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 group-hover:border-cyan/30 transition-colors">
+                <card.icon className="w-6 h-6 text-white group-hover:text-cyan transition-colors" />
               </div>
-              <h3 className="font-syne font-bold text-white text-lg mb-3">{card.title}</h3>
-              <p className="text-muted text-[15px] leading-[1.7]">{card.body}</p>
+              <h3 className="font-outfit font-bold text-white text-xl mb-4 tracking-tight">{card.title}</h3>
+              <p className="text-muted text-[15px] leading-relaxed">{card.body}</p>
             </motion.div>
           ))}
         </motion.div>
