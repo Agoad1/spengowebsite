@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import MagneticButton from './MagneticButton';
+import TactileCard from './TactileCard';
 
 const plans = [
   {
@@ -46,22 +47,24 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.12 } },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
-};
-
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <motion.section
+      id="pricing"
+      initial={{ opacity: 0, y: 40, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+      className="relative py-24 md:py-32 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">Service Plans</p>
+          <p className="text-cyan text-[10px] font-bold uppercase tracking-widest mb-4 label-tracking">Service Plans</p>
           <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
             Standardized packages. Custom results.
           </h2>
@@ -74,13 +77,11 @@ export default function Pricing() {
           viewport={{ once: true, margin: '-80px' }}
           className="mt-14 grid md:grid-cols-3 gap-6"
         >
-          {plans.map((plan) => (
-            <motion.div
+          {plans.map((plan, i) => (
+            <TactileCard
               key={plan.name}
-              variants={cardVariants}
-              whileHover={{ y: -5 }}
-              className={`glass-card rounded-3xl p-8 md:p-10 transition-all duration-300 relative overflow-hidden group ${plan.highlighted ? 'ring-1 ring-cyan/30' : ''
-                }`}
+              delay={i * 0.1}
+              className={`rounded-3xl p-8 md:p-10 transition-all duration-300 relative overflow-hidden group ${plan.highlighted ? 'ring-1 ring-cyan/30' : ''}`}
             >
               {plan.highlighted && (
                 <div className="absolute top-0 right-0">
@@ -107,7 +108,7 @@ export default function Pricing() {
                   Inquire Now
                 </div>
               </MagneticButton>
-            </motion.div>
+            </TactileCard>
           ))}
         </motion.div>
 
@@ -121,6 +122,6 @@ export default function Pricing() {
           Need something custom? Start a project and tell us what you need. We will scope it for you.
         </motion.p>
       </div>
-    </section>
+    </motion.section>
   );
 }

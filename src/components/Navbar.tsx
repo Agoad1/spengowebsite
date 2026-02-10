@@ -2,10 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 const navLinks = [
-  { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
 ];
 
 export default function Navbar() {
@@ -56,7 +54,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.97 }}
             className="text-sm text-cyan border border-cyan/30 hover:border-cyan/60 px-4 py-2 rounded-lg transition-colors duration-200"
           >
-            Start a Project
+            Free Audit
           </motion.a>
         </div>
 
@@ -91,7 +89,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             className="inline-block mt-2 text-sm text-cyan border border-cyan/30 px-4 py-2 rounded-lg"
           >
-            Start a Project
+            Free Audit
           </a>
         </motion.div>
       )}

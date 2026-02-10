@@ -18,7 +18,14 @@ export default function Contact() {
     };
 
     return (
-        <section id="start" className="relative py-24 md:py-32 overflow-hidden">
+        <motion.section
+            id="start"
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            className="relative py-24 md:py-32 overflow-hidden"
+        >
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
                     <motion.div
@@ -163,7 +170,29 @@ export default function Contact() {
                         </div>
                     </motion.div>
                 </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="mt-32 pt-24 border-t border-white/5"
+                >
+                    <div className="grid md:grid-cols-3 gap-12">
+                        <div>
+                            <h4 className="text-white font-bold mb-3">Why no discovery calls?</h4>
+                            <p className="text-muted text-sm leading-relaxed">We review your site up-front and send a clear plan. No scheduling friction, no wasted time.</p>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-3">What if I have a site already?</h4>
+                            <p className="text-muted text-sm leading-relaxed">Perfect. We audit your current performance and focus on where you are losing customers.</p>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-3">How long does it take?</h4>
+                            <p className="text-muted text-sm leading-relaxed">Most builds/upgrades are completed in 2-4 weeks. You get a clear timeline in your proposal.</p>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
-        </section>
+        </motion.section>
     );
 }

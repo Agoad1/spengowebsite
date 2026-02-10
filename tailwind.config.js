@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#0A0A0F',
+        bg: '#0A0A0B',
         cyan: {
           DEFAULT: '#00E5FF',
           50: '#E0FCFF',
@@ -12,10 +12,11 @@ export default {
           500: '#00C4D9',
           600: '#00A3B3',
         },
+        risk: '#FF3B30',
         body: '#E0E0E0',
-        muted: '#666666',
+        muted: '#A0A0A0',
         card: 'rgba(255, 255, 255, 0.03)',
-        'card-border': 'rgba(255, 255, 255, 0.06)',
+        'card-border': 'rgba(255, 255, 255, 0.08)',
       },
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],

@@ -4,18 +4,18 @@ import { Zap, ShieldCheck, Layers } from 'lucide-react';
 const cards = [
   {
     icon: Zap,
-    title: 'Attention is compressed',
-    body: "AI gives one answer. One link. Visitors arrive ready to decide. They aren't here to browse. If your site doesn't work instantly, you're invisible.",
+    title: 'People are in a hurry',
+    body: "Customers don't browse anymore. They want an answer now. If they have to wait or look for it, they'll leave.",
   },
   {
     icon: ShieldCheck,
-    title: 'Trust is the new filter',
-    body: "Outdated, slow, or generic sites get filtered out before a buyer reads a single word. First impressions are the only impressions.",
+    title: 'If it looks bad, they leave',
+    body: "If your site looks old or slow, people think your business is old or slow. You lose the sale before they even read a word.",
   },
   {
     icon: Layers,
-    title: "One homepage isn't enough",
-    body: "Every offer, campaign, and audience needs its own page. The landing page economy is here. Most businesses haven't caught up.",
+    title: "One page doesn't fit everyone",
+    body: "You shouldn't send every customer to the same front door. We build specific pages for specific goals.",
   },
 ];
 
@@ -33,17 +33,18 @@ const cardVariants = {
 
 export default function Problem() {
   return (
-    <section className="relative py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative pt-24 md:pt-32 pb-12 md:pb-16 overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-cyan/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">The Shift</p>
+          <p className="text-cyan text-[10px] font-bold uppercase tracking-widest mb-4 label-tracking">The Reality</p>
           <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1]">
-            The internet doesn&rsquo;t browse anymore.
+            People don&rsquo;t browse anymore.
           </h2>
         </motion.div>
 

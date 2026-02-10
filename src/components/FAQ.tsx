@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const faqs = [
   {
@@ -25,68 +23,34 @@ const faqs = [
   },
 ];
 
-function FAQItem({ item, isOpen, toggle }: { item: typeof faqs[0]; isOpen: boolean; toggle: () => void }) {
-  return (
-    <div className="border-b border-card-border">
-      <button
-        onClick={toggle}
-        className="w-full flex items-center justify-between py-6 text-left group"
-      >
-        <span className="font-jakarta font-medium text-white text-base pr-4 group-hover:text-cyan transition-colors duration-200">
-          {item.q}
-        </span>
-        <ChevronDown
-          className={`w-5 h-5 text-muted shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="overflow-hidden"
-          >
-            <p className="text-muted text-[15px] leading-[1.7] pb-6 max-w-[640px]">{item.a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
     <section id="faq" className="relative py-24 md:py-32">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-cyan text-sm font-medium tracking-wide uppercase mb-4">FAQ</p>
+          <p className="text-cyan text-[10px] font-bold uppercase tracking-widest mb-4 label-tracking">FAQ</p>
           <h2 className="font-outfit font-bold text-white text-[clamp(2rem,4vw,3rem)] tracking-headline leading-[1.1] mb-12">
             Questions? Answered.
           </h2>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid md:grid-cols-2 gap-4"
         >
           {faqs.map((item, i) => (
-            <FAQItem
-              key={i}
-              item={item}
-              isOpen={openIndex === i}
-              toggle={() => setOpenIndex(openIndex === i ? null : i)}
-            />
+            <div key={i} className="glass-card rounded-2xl p-6 h-full">
+              <h3 className="font-outfit font-bold text-white text-lg mb-3 tracking-tight">{item.q}</h3>
+              <p className="text-muted text-[14px] leading-relaxed">{item.a}</p>
+            </div>
           ))}
         </motion.div>
       </div>

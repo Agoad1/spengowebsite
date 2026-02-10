@@ -9,7 +9,13 @@ export default function ValueDemonstrator() {
     const conversionLoss = Math.min(loadTime * 12, 85);
 
     return (
-        <section className="relative py-24 md:py-32 overflow-hidden bg-white/[0.01]">
+        <motion.section
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            className="relative pt-12 md:pt-16 pb-24 md:pb-32 overflow-hidden bg-white/[0.01]"
+        >
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <motion.div
@@ -18,12 +24,12 @@ export default function ValueDemonstrator() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full mb-6">
-                            <AlertTriangle className="w-3.5 h-3.5 text-red-500" />
-                            <span className="text-red-500 text-[10px] font-bold uppercase tracking-widest">The Risk</span>
+                        <div className="inline-flex items-center gap-2 bg-risk/10 border border-risk/20 px-3 py-1 rounded-full mb-6">
+                            <AlertTriangle className="w-3.5 h-3.5 text-risk" />
+                            <span className="text-risk text-[10px] font-bold uppercase tracking-widest label-tracking">The Risk</span>
                         </div>
                         <h2 className="font-outfit font-bold text-white text-[clamp(2.5rem,5vw,4rem)] tracking-tight leading-[1] mb-6">
-                            The cost of a <span className="text-red-500">slow</span> first impression.
+                            The cost of a <span className="text-risk">slow</span> first impression.
                         </h2>
                         <p className="text-muted text-lg mb-8 max-w-lg leading-relaxed">
                             Every second your site takes to load, you're not just losing speed—you're losing revenue.
@@ -61,14 +67,14 @@ export default function ValueDemonstrator() {
                                 <Gauge className="w-16 h-16 text-white" />
                             </div>
                             <div className="relative">
-                                <div className="text-muted text-xs font-bold uppercase tracking-widest mb-2">Bounce Rate</div>
+                                <div className="text-muted text-[10px] font-bold uppercase tracking-widest mb-2 label-tracking">People Leaving</div>
                                 <div className="text-4xl font-outfit font-bold text-white mb-2">+{bounceRate}%</div>
                                 <p className="text-muted text-xs leading-relaxed">
-                                    Probability of visitor leaving before interaction.
+                                    The chance someone leaves without clicking anything.
                                 </p>
                             </div>
                             <motion.div
-                                className="absolute bottom-0 left-0 h-1 bg-red-500/50"
+                                className="absolute bottom-0 left-0 h-1 bg-risk/50"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${bounceRate}%` }}
                                 transition={{ duration: 0.5 }}
@@ -80,14 +86,14 @@ export default function ValueDemonstrator() {
                                 <TrendingUp className="w-16 h-16 text-white" />
                             </div>
                             <div className="relative">
-                                <div className="text-muted text-xs font-bold uppercase tracking-widest mb-2">Conv. Loss</div>
+                                <div className="text-muted text-[10px] font-bold uppercase tracking-widest mb-2 label-tracking">Lost Sales</div>
                                 <div className="text-4xl font-outfit font-bold text-white mb-2">-{conversionLoss}%</div>
                                 <p className="text-muted text-xs leading-relaxed">
-                                    Reduction in bottom-line revenue potential.
+                                    The money you&rsquo;re losing because the site is too slow.
                                 </p>
                             </div>
                             <motion.div
-                                className="absolute bottom-0 left-0 h-1 bg-red-500/50"
+                                className="absolute bottom-0 left-0 h-1 bg-risk/50"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${conversionLoss}%` }}
                                 transition={{ duration: 0.5 }}
@@ -99,15 +105,15 @@ export default function ValueDemonstrator() {
                                 <TrendingUp className="w-6 h-6 text-cyan" />
                             </div>
                             <div>
-                                <h3 className="text-white font-bold mb-1">Our Standard: &lt;0.8s</h3>
+                                <h3 className="text-white font-bold mb-1">Our Goal: Blink of an eye</h3>
                                 <p className="text-muted text-sm">
-                                    We build infrastructure that eliminates load-time friction entirely.
+                                    We build high-speed sites that load in less than 0.8 seconds.
                                 </p>
                             </div>
                         </div>
                     </motion.div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }
