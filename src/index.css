@@ -6,6 +6,23 @@ html {
   scroll-behavior: smooth;
 }
 
+section {
+  scroll-margin-top: 80px;
+  min-height: 40vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  letter-spacing: -0.05em;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: #050508;

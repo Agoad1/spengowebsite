@@ -19,18 +19,18 @@ This document outlines the planned upgrades and enhancements for the SPENGO webs
 - [x] **Custom SVG Motion**: Replace all generic Lucide icons with custom-drawn SVGs that animate uniquely when scrolled into view.
 
 ## 3. High-Conversion Functional Upgrades
-- [ ] **Authentic Lead Capture**: Replace placeholder `#start` links with a fully-styled, custom form (via Tally or Typeform embed) that feels native to the site.
-- [ ] **Interactive Value Demonstrator**: Add a "Speed vs. Trust" interactive element or a simple ROI calculator to show the cost of a bad website.
-- [ ] **Sticky Mobile CTA**: Implement a visually distinct, high-impact CTA button for mobile users that stays accessible without being intrusive.
-- [ ] **Smooth Scroll Refinement**: Ensure anchor link jumps account for the navbar height and use a custom ease-out-expo timing.
+- [x] **Authentic Lead Capture**: Replace placeholder `#start` links with a fully-styled, custom form (via Tally or Typeform embed) that feels native to the site.
+- [x] **Interactive Value Demonstrator**: Add a "Speed vs. Trust" interactive element or a simple ROI calculator to show the cost of a bad website.
+- [x] **Sticky Mobile CTA**: Implement a visually distinct, high-impact CTA button for mobile users that stays accessible without being intrusive.
+- [x] **Smooth Scroll Refinement**: Ensure anchor link jumps account for the navbar height and use a custom ease-out-expo timing.
 
 ## 4. Performance & Technical Excellence
-- [ ] **Zero-Layout-Shift (CLS)**: Implement custom skeleton loaders for every section, using the brand's primary colors/noise textures.
-- [ ] **Typography Refinement**: Adjust kerning and tracking for "Syne" headlines to ensure they look "designed" rather than just "typed."
-- [ ] **Edge SEO & Meta**: 
-    - [ ] Custom-designed OG images (no placeholders).
-    - [ ] Full Favicon suite (Apple Touch, Android, etc.).
-    - [ ] JSON-LD Structured Data for Local Business/Service.
+- [x] **Zero-Layout-Shift (CLS)**: Implement custom skeleton loaders for every section, using the brand's primary colors/noise textures.
+- [x] **Typography Refinement**: Adjust kerning and tracking for "Syne" headlines to ensure they look "designed" rather than just "typed."
+- [x] **Edge SEO & Meta**: 
+    - [x] Custom-designed OG images (no placeholders).
+    - [x] Full Favicon suite (Apple Touch, Android, etc.).
+    - [x] JSON-LD Structured Data for Local Business/Service.
 
 ## 5. Exclusions (Do Not Implement)
 - [ ] **No Fake Testimonials**: Absolute ban on placeholder reviews. We only use real client words once available.
