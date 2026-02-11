@@ -4,18 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#0A0A0B',
+        bg: '#1a1a1a',
+        surface: '#242424',
+        primary: {
+          DEFAULT: '#a855f7',
+          hover: '#9333ea',
+        },
         cyan: {
-          DEFAULT: '#00E5FF',
-          50: '#E0FCFF',
-          400: '#00E5FF',
-          500: '#00C4D9',
-          600: '#00A3B3',
+          DEFAULT: '#06b6d4',
         },
         risk: '#FF3B30',
-        body: '#E0E0E0',
-        muted: '#A0A0A0',
-        card: 'rgba(255, 255, 255, 0.03)',
+        body: '#ffffff',
+        muted: '#a0a0a0',
+        card: '#242424',
         'card-border': 'rgba(255, 255, 255, 0.08)',
       },
       fontFamily: {

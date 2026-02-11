@@ -1,37 +1,6 @@
 import { motion } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 
-const titleWords = "Your website either wins a customer or loses one in a split second.".split(" ");
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: (i = 1) => ({
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 * i },
-  }),
-};
-
-const child = {
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 100,
-    },
-  },
-  hidden: {
-    opacity: 0,
-    y: 20,
-    transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 100,
-    },
-  },
-};
-
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -51,51 +20,42 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1
-            variants={container}
-            initial="hidden"
-            animate="visible"
-            className="font-outfit font-extrabold tracking-tighter text-white text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.9] lg:max-w-5xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="font-outfit font-semibold tracking-[-0.02em] text-white text-[clamp(2.5rem,5vw,60px)] leading-[1.1] max-w-[900px]"
           >
-            {titleWords.map((word, index) => (
-              <motion.span
-                variants={child}
-                key={index}
-                className="inline-block mr-[0.2em]"
-              >
-                {word === "wins" || word === "loses" ? (
-                  <span className="text-cyan">{word}</span>
-                ) : word === "split" || word === "second." ? (
-                  <span className="opacity-40 font-light">{word}</span>
-                ) : word}
-              </motion.span>
-            ))}
+            We Make It Easy For <br />
+            Your Website Visitors To Convert
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.2 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <p className="mt-12 text-xl md:text-2xl font-outfit font-medium text-white/90 max-w-2xl leading-tight">
-              The internet doesn&rsquo;t browse anymore. <span className="text-cyan italic">People are in a hurry.</span>
-            </p>
-            <p className="mt-4 text-lg text-muted max-w-[600px] leading-relaxed">
-              If your site looks old or load times are slow, they leave. We build the infrastructure that turns skepticism into trust instantly.
-            </p>
+            <div className="mt-6">
+              <p className="text-[20px] font-medium leading-[1.5] text-white">
+                People don't browse anymore. They land on your site with intent to buy.
+              </p>
+              <p className="mt-4 text-[18px] font-normal leading-[1.6] text-[#a8a8a8] max-w-[700px]">
+                If it&rsquo;s slow, outdated, or confusing, they&rsquo;re gone in seconds. We build fast, modern sites that make buying easy and earn trust instantly.
+              </p>
+            </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <MagneticButton href="#start">
-                <div className="relative inline-flex items-center gap-2 bg-cyan text-bg font-jakarta font-bold px-8 py-4 rounded-xl text-base transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,229,255,0.3)] hover:scale-[1.02]">
-                  Start Your Audit
+                <div className="relative inline-flex items-center gap-2 bg-primary text-white font-jakarta font-semibold px-8 py-4 rounded-lg text-base btn-jump">
+                  Start Your Free Audit
                   <span aria-hidden="true" className="text-lg">&rarr;</span>
                 </div>
               </MagneticButton>
 
               <a
-                href="#process"
+                href="#pricing"
                 className="text-muted hover:text-body transition-colors text-sm font-medium label-tracking"
               >
-                THE PROCESS &darr;
+                HOW IT WORKS &darr;
               </a>
             </div>
           </motion.div>

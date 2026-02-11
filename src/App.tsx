@@ -1,6 +1,5 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Process from './components/Process';
 import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import CursorGlow from './components/CursorGlow';
@@ -9,6 +8,8 @@ import Contact from './components/Contact';
 import MobileCTA from './components/MobileCTA';
 import BackgroundBlobs from './components/BackgroundBlobs';
 import BackgroundEngine from './components/BackgroundEngine';
+import BeforeAfter from './components/BeforeAfter';
+import RiskReversal from './components/RiskReversal';
 
 export default function App() {
   return (
@@ -19,10 +20,11 @@ export default function App() {
       <MobileCTA />
       <Navbar />
       <Hero />
-      <Process />
       <Pricing />
+      <BeforeAfter />
       <ValueDemonstrator />
       <Contact />
+      <RiskReversal />
       <Footer />
     </div>
   );

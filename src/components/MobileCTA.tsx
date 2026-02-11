@@ -25,9 +25,9 @@ export default function MobileCTA() {
                 >
                     <a
                         href="#start"
-                        className="flex items-center justify-center w-full bg-cyan text-bg font-jakarta font-bold py-4 rounded-xl shadow-[0_8px_30px_rgb(0,229,255,0.3)] backdrop-blur-md active:scale-95 transition-transform"
+                        className="flex items-center justify-center w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl shadow-[0_8px_30px_rgba(168,85,247,0.3)] backdrop-blur-md btn-jump"
                     >
-                        Free Audit
+                        Start Your Free Audit
                     </a>
                 </motion.div>
             )}

@@ -28,8 +28,14 @@ export default function MagneticButton({ children, className = '', href, onClick
 
     const content = (
         <motion.div
-            animate={{ x: position.x, y: position.y }}
-            transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
+            animate={{
+                x: position.x,
+                y: position.y,
+                scale: position.x !== 0 ? 1.05 : 1
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 12, mass: 0.1 }}
             className="relative z-10"
         >
             {children}
@@ -54,9 +60,14 @@ export default function MagneticButton({ children, className = '', href, onClick
 
             {/* Background glow that follows slightly behind */}
             <motion.div
-                animate={{ x: position.x * 0.5, y: position.y * 0.5 }}
-                transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
-                className="absolute inset-0 bg-cyan opacity-0 hover:opacity-10 blur-xl transition-opacity duration-300 rounded-full"
+                animate={{
+                    x: position.x * 0.4,
+                    y: position.y * 0.4,
+                    scale: position.x !== 0 ? 1.2 : 1,
+                    opacity: position.x !== 0 ? 0.4 : 0
+                }}
+                transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.1 }}
+                className="absolute inset-0 bg-primary/40 blur-2xl pointer-events-none rounded-full"
             />
         </div>
     );

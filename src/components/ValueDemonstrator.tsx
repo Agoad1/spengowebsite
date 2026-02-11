@@ -1,6 +1,21 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { Gauge, AlertTriangle, TrendingUp } from 'lucide-react';
+
+function Counter({ value, prefix = "", suffix = "" }: { value: number, prefix?: string, suffix?: string }) {
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest: number) => {
+        const val = Math.round(latest);
+        return `${prefix}${val}${suffix}`;
+    });
+
+    useEffect(() => {
+        const controls = animate(count, value, { duration: 1, ease: "easeOut" });
+        return controls.stop;
+    }, [count, value]);
+
+    return <motion.span>{rounded}</motion.span>;
+}
 
 export default function ValueDemonstrator() {
     const [loadTime, setLoadTime] = useState(3);
@@ -68,7 +83,9 @@ export default function ValueDemonstrator() {
                             </div>
                             <div className="relative">
                                 <div className="text-muted text-[10px] font-bold uppercase tracking-widest mb-2 label-tracking">People Leaving</div>
-                                <div className="text-4xl font-outfit font-bold text-white mb-2">+{bounceRate}%</div>
+                                <div className="text-4xl font-outfit font-bold text-white mb-2">
+                                    <Counter value={bounceRate} prefix="+" suffix="%" />
+                                </div>
                                 <p className="text-muted text-xs leading-relaxed">
                                     The chance someone leaves without clicking anything.
                                 </p>
@@ -87,7 +104,9 @@ export default function ValueDemonstrator() {
                             </div>
                             <div className="relative">
                                 <div className="text-muted text-[10px] font-bold uppercase tracking-widest mb-2 label-tracking">Lost Sales</div>
-                                <div className="text-4xl font-outfit font-bold text-white mb-2">-{conversionLoss}%</div>
+                                <div className="text-4xl font-outfit font-bold text-white mb-2">
+                                    <Counter value={conversionLoss} prefix="-" suffix="%" />
+                                </div>
                                 <p className="text-muted text-xs leading-relaxed">
                                     The money you&rsquo;re losing because the site is too slow.
                                 </p>
@@ -110,6 +129,16 @@ export default function ValueDemonstrator() {
                                     We build high-speed sites that load in less than 0.8 seconds.
                                 </p>
                             </div>
+                        </div>
+
+                        <div className="sm:col-span-2 mt-4 flex justify-center lg:justify-start">
+                            <a
+                                href="#start"
+                                className="inline-flex items-center gap-2 bg-primary text-white font-jakarta font-semibold px-8 py-4 rounded-xl text-base btn-jump"
+                            >
+                                Start Your Free Audit
+                                <span aria-hidden="true" className="text-lg">&rarr;</span>
+                            </a>
                         </div>
                     </motion.div>
                 </div>

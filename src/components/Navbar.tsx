@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 const navLinks = [
-  { label: 'Process', href: '#process' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'How It Works', href: '#pricing' },
 ];
 
 export default function Navbar() {
@@ -35,7 +34,7 @@ export default function Navbar() {
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="/" className="font-outfit text-2xl font-bold text-white tracking-tighter">
-          SPENGO<span className="text-cyan">.</span>
+          SPENGO<span className="text-primary">.</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -43,19 +42,17 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted hover:text-body transition-colors duration-200"
+              className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1"
             >
               {link.label}
             </a>
           ))}
-          <motion.a
+          <a
             href="#start"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="text-sm text-cyan border border-cyan/30 hover:border-cyan/60 px-4 py-2 rounded-lg transition-colors duration-200"
+            className="text-sm text-primary border border-primary/30 hover:border-primary/60 px-4 py-2 rounded-lg btn-jump"
           >
-            Free Audit
-          </motion.a>
+            Start Your Free Audit
+          </a>
         </div>
 
         <button
@@ -87,9 +84,9 @@ export default function Navbar() {
           <a
             href="#start"
             onClick={() => setMobileOpen(false)}
-            className="inline-block mt-2 text-sm text-cyan border border-cyan/30 px-4 py-2 rounded-lg"
+            className="inline-block mt-2 text-sm text-primary border border-primary/30 px-4 py-2 rounded-lg"
           >
-            Free Audit
+            Start Your Free Audit
           </a>
         </motion.div>
       )}

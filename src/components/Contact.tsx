@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
-import MagneticButton from './MagneticButton';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function Contact() {
     const [submitted, setSubmitted] = useState(false);
@@ -85,63 +84,62 @@ export default function Contact() {
                                         className="space-y-6"
                                     >
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <label htmlFor="name" className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Full Name</label>
+                                            <div className="space-y-2 group">
+                                                <label htmlFor="name" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Your name</label>
                                                 <input
                                                     required
                                                     type="text"
                                                     id="name"
-                                                    placeholder="John Doe"
-                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-cyan/50 transition-colors"
+                                                    placeholder="Your name"
+                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
                                                 />
                                             </div>
-                                            <div className="space-y-2">
-                                                <label htmlFor="email" className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Email Address</label>
+                                            <div className="space-y-2 group">
+                                                <label htmlFor="email" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Where should we send your audit?</label>
                                                 <input
                                                     required
                                                     type="email"
                                                     id="email"
-                                                    placeholder="john@company.com"
-                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-cyan/50 transition-colors"
+                                                    placeholder="Where should we send your audit?"
+                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
                                                 />
                                             </div>
                                         </div>
-                                        <div className="space-y-2">
-                                            <label htmlFor="website" className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Current Website (Optional)</label>
+                                        <div className="space-y-2 group">
+                                            <label htmlFor="website" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Your website URL</label>
                                             <input
                                                 type="url"
                                                 id="website"
-                                                placeholder="https://example.com"
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-cyan/50 transition-colors"
+                                                placeholder="Your website URL"
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
                                             />
                                         </div>
-                                        <div className="space-y-2">
-                                            <label htmlFor="message" className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Your Project Goals</label>
+                                        <div className="space-y-2 group">
+                                            <label htmlFor="message" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">What's frustrating you about your current site?</label>
                                             <textarea
                                                 required
                                                 id="message"
                                                 rows={4}
-                                                placeholder="Tell us what you're looking to build or solve..."
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-cyan/50 transition-colors resize-none"
+                                                placeholder="What's frustrating you about your current site?"
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300 resize-none"
                                             />
                                         </div>
 
-                                        <div className="pt-4">
-                                            <MagneticButton className="w-full">
-                                                <button
-                                                    disabled={loading}
-                                                    type="submit"
-                                                    className="w-full bg-cyan text-bg font-jakarta font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] transition-all disabled:opacity-50"
-                                                >
-                                                    {loading ? (
-                                                        <div className="w-5 h-5 border-2 border-bg/30 border-t-bg rounded-full animate-spin" />
-                                                    ) : (
-                                                        <>
-                                                            Submit Project Request <ArrowRight className="w-4 h-4" />
-                                                        </>
-                                                    )}
-                                                </button>
-                                            </MagneticButton>
+                                        <div className="pt-4 space-y-4">
+                                            <button
+                                                disabled={loading}
+                                                type="submit"
+                                                className="w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl flex items-center justify-center gap-2 btn-jump disabled:opacity-50"
+                                            >
+                                                {loading ? (
+                                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                ) : (
+                                                    "Start Your Free Audit"
+                                                )}
+                                            </button>
+                                            <p className="text-[14px] text-muted text-center italic">
+                                                Audits are performed by lead engineers with AI-optimization background.
+                                            </p>
                                         </div>
                                     </motion.form>
                                 ) : (
