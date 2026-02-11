@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { SpengoLogo } from './SpengoLogo';
 
 const navLinks = [
   { label: 'How It Works', href: '#pricing' },
@@ -33,8 +34,11 @@ export default function Navbar() {
     >
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" className="font-outfit text-2xl font-bold text-white tracking-tighter">
-          SPENGO<span className="text-primary">.</span>
+        <a href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity group">
+          <SpengoLogo className="w-9 h-9" />
+          <span className="font-outfit text-2xl font-bold text-white tracking-tighter group-hover:text-white/90 transition-colors">
+            SPENGO
+          </span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -44,7 +48,9 @@ export default function Navbar() {
               href={link.href}
               className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1"
             >
-              {link.label}
+              <span className={link.label === 'How It Works' ? 'glow-noise' : ''}>
+                {link.label}
+              </span>
             </a>
           ))}
           <a
@@ -67,27 +73,31 @@ export default function Navbar() {
 
       {mobileOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-bg/95 backdrop-blur-xl border-b border-card-border px-6 pb-6 pt-2"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="md:hidden bg-[#0A0A0A]/95 backdrop-blur-2xl border-b border-white/5 px-6 pb-8 pt-4 overflow-hidden"
         >
-          {navLinks.map((link) => (
+          <div className="flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="block py-4 text-lg font-outfit text-muted hover:text-white transition-colors active:text-primary active:translate-x-1 duration-200"
+              >
+                <span className={link.label === 'How It Works' ? 'glow-noise' : ''}>
+                  {link.label}
+                </span>
+              </a>
+            ))}
             <a
-              key={link.href}
-              href={link.href}
+              href="#start"
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-muted hover:text-body transition-colors"
+              className="mt-4 flex items-center justify-center bg-primary text-white font-jakarta font-bold py-4 rounded-xl text-base shadow-[0_10px_20px_rgba(168,85,247,0.2)] active:scale-98 transition-transform"
             >
-              {link.label}
+              Start Your Free Audit
             </a>
-          ))}
-          <a
-            href="#start"
-            onClick={() => setMobileOpen(false)}
-            className="inline-block mt-2 text-sm text-primary border border-primary/30 px-4 py-2 rounded-lg"
-          >
-            Start Your Free Audit
-          </a>
+          </div>
         </motion.div>
       )}
     </motion.nav>

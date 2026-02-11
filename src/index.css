@@ -311,3 +311,301 @@ body::after {
   background-color: rgba(168, 85, 247, 0.2);
   color: #fff;
 }
+
+.soft-highlight {
+  color: #c084fc;
+  /* lighter purple for better contrast */
+  background: rgba(168, 85, 247, 0.08);
+  /* very subtle background */
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: inline;
+}
+
+.glow-noise {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900 !important;
+  font-size: 1.15em;
+  color: #c084fc !important;
+  /* Lighter purple for better vibrance */
+  text-shadow:
+    0 0 15px rgba(168, 85, 247, 0.8),
+    0 0 30px rgba(168, 85, 247, 0.4),
+    0 0 45px rgba(168, 85, 247, 0.2);
+  letter-spacing: 0.05em;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.glow-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- REDESIGN: Decision Window & Question Cards --- */
+
+.question-card {
+  background: rgba(36, 36, 36, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.question-card-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.question-card-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.question-card-body {
+  font-size: 14px;
+  font-weight: 400;
+  color: #a0a0a0;
+  line-height: 1.5;
+}
+
+.goal-card {
+  background: rgba(6, 182, 212, 0.08);
+  /* cyan tint */
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.goal-card-icon {
+  color: #06b6d4;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.goal-card-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.goal-card-body {
+  font-size: 14px;
+  color: #a0a0a0;
+  line-height: 1.5;
+}
+
+.decision-window-slider {
+  background: rgba(36, 36, 36, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.slider-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-display {
+  font-size: 24px;
+  font-weight: 700;
+  color: #06b6d4;
+}
+
+.timeline-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+  min-height: 200px;
+}
+
+.bad-site {
+  border-left: 3px solid #ef4444;
+  /* red */
+  padding-left: 16px;
+}
+
+.good-site {
+  border-left: 3px solid #06b6d4;
+  /* cyan */
+  padding-left: 16px;
+}
+
+.site-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.bad-site .site-label {
+  color: #ef4444;
+}
+
+.good-site .site-label {
+  color: #06b6d4;
+}
+
+.timeline-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #ffffff;
+  min-height: 70px;
+  text-align: center;
+  transition: opacity 0.2s ease;
+}
+
+.timeline-stats {
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.bad-site .timeline-stats {
+  color: #ef4444;
+}
+
+.good-site .timeline-stats {
+  color: #06b6d4;
+}
+
+.slider-instruction {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.decision-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Webkit Track Fill Hack using linear-gradient on the track itself */
+.decision-slider::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #06b6d4 100%);
+  transition: all 0.1s ease;
+}
+
+.decision-slider::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #06b6d4 100%);
+}
+
+.decision-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 3px solid #a855f7;
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+  margin-top: -8px;
+  /* Centers thumb on 8px track */
+  transition: all 0.2s ease;
+}
+
+.decision-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 3px solid #a855f7;
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+  transition: all 0.2s ease;
+}
+
+.slider-cta {
+  width: 100%;
+  background: #a855f7;
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.slider-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .timeline-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

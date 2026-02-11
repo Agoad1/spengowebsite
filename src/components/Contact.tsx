@@ -84,83 +84,86 @@ export default function Contact() {
                                         className="space-y-6"
                                     >
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2 group">
-                                                <label htmlFor="name" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Your name</label>
+                                            <div className="space-y-3 group">
+                                                <label htmlFor="name" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">Your name</label>
                                                 <input
                                                     required
                                                     type="text"
                                                     id="name"
                                                     placeholder="Your name"
-                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
+                                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                                 />
                                             </div>
-                                            <div className="space-y-2 group">
-                                                <label htmlFor="email" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Where should we send your audit?</label>
+                                            <div className="space-y-3 group">
+                                                <label htmlFor="email" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">Audit Delivery Email</label>
                                                 <input
                                                     required
                                                     type="email"
                                                     id="email"
                                                     placeholder="Where should we send your audit?"
-                                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
+                                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                                 />
                                             </div>
                                         </div>
-                                        <div className="space-y-2 group">
-                                            <label htmlFor="website" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Your website URL</label>
+                                        <div className="space-y-3 group">
+                                            <label htmlFor="website" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">Your website URL</label>
                                             <input
                                                 type="url"
                                                 id="website"
                                                 placeholder="Your website URL"
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300"
+                                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                             />
                                         </div>
-                                        <div className="space-y-2 group">
-                                            <label htmlFor="message" className="text-xs font-bold text-muted uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">What's frustrating you about your current site?</label>
+                                        <div className="space-y-3 group">
+                                            <label htmlFor="message" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">What's frustrating you about your current site?</label>
                                             <textarea
                                                 required
                                                 id="message"
                                                 rows={4}
                                                 placeholder="What's frustrating you about your current site?"
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300 resize-none"
+                                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300 resize-none"
                                             />
                                         </div>
 
-                                        <div className="pt-4 space-y-4">
+                                        <div className="pt-6 space-y-4 text-center">
                                             <button
                                                 disabled={loading}
                                                 type="submit"
-                                                className="w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl flex items-center justify-center gap-2 btn-jump disabled:opacity-50"
+                                                className="w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl flex items-center justify-center gap-2 btn-jump disabled:opacity-50 text-base"
                                             >
                                                 {loading ? (
                                                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                                 ) : (
-                                                    "Start Your Free Audit"
+                                                    <>Receive My Free Audit <span className="opacity-50">→</span></>
                                                 )}
                                             </button>
-                                            <p className="text-[14px] text-muted text-center italic">
-                                                Audits are performed by lead engineers with AI-optimization background.
+                                            <p className="text-[12px] text-muted/60 font-medium italic">
+                                                Direct engineer feedback. Zero automated reports.
                                             </p>
                                         </div>
                                     </motion.form>
                                 ) : (
                                     <motion.div
                                         key="success"
-                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="py-12 text-center"
+                                        className="py-16 text-center"
                                     >
-                                        <div className="w-20 h-20 bg-cyan/10 rounded-full flex items-center justify-center mx-auto mb-8">
-                                            <CheckCircle2 className="w-10 h-10 text-cyan" />
+                                        <div className="relative inline-block mb-8">
+                                            <div className="absolute inset-0 bg-cyan/20 blur-2xl rounded-full" />
+                                            <div className="relative w-20 h-20 bg-cyan/10 rounded-full flex items-center justify-center border border-cyan/20">
+                                                <CheckCircle2 className="w-10 h-10 text-cyan" />
+                                            </div>
                                         </div>
-                                        <h3 className="text-2xl font-outfit font-bold text-white mb-4">Request Received</h3>
-                                        <p className="text-muted leading-relaxed max-w-xs mx-auto mb-10">
+                                        <h3 className="text-3xl font-outfit font-bold text-white mb-4">You're All Set</h3>
+                                        <p className="text-muted leading-relaxed max-w-[280px] mx-auto mb-10 text-[15px]">
                                             We've received your project details. A lead engineer will review your request and get back to you within 24 hours.
                                         </p>
                                         <button
                                             onClick={() => setSubmitted(false)}
-                                            className="text-cyan text-sm font-bold border-b border-cyan/30 hover:border-cyan transition-colors"
+                                            className="text-cyan text-xs font-bold uppercase tracking-widest border-b border-cyan/20 hover:border-cyan/100 transition-all duration-300 pb-1"
                                         >
-                                            Send another message
+                                            Send another request
                                         </button>
                                     </motion.div>
                                 )}
@@ -168,28 +171,6 @@ export default function Contact() {
                         </div>
                     </motion.div>
                 </div>
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="mt-32 pt-24 border-t border-white/5"
-                >
-                    <div className="grid md:grid-cols-3 gap-12">
-                        <div>
-                            <h4 className="text-white font-bold mb-3">Why no discovery calls?</h4>
-                            <p className="text-muted text-sm leading-relaxed">We review your site up-front and send a clear plan. No scheduling friction, no wasted time.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-white font-bold mb-3">What if I have a site already?</h4>
-                            <p className="text-muted text-sm leading-relaxed">Perfect. We audit your current performance and focus on where you are losing customers.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-white font-bold mb-3">How long does it take?</h4>
-                            <p className="text-muted text-sm leading-relaxed">Most builds/upgrades are completed in 2-4 weeks. You get a clear timeline in your proposal.</p>
-                        </div>
-                    </div>
-                </motion.div>
             </div>
         </motion.section>
     );

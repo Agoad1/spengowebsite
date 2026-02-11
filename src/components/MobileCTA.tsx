@@ -21,11 +21,11 @@ export default function MobileCTA() {
                     initial={{ y: 100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 100, opacity: 0 }}
-                    className="fixed bottom-6 left-6 right-6 z-[60] md:hidden"
+                    className="fixed bottom-8 left-6 right-6 z-[60] md:hidden"
                 >
                     <a
                         href="#start"
-                        className="flex items-center justify-center w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl shadow-[0_8px_30px_rgba(168,85,247,0.3)] backdrop-blur-md btn-jump"
+                        className="flex items-center justify-center w-full bg-primary text-white font-jakarta font-bold py-4 rounded-xl shadow-[0_20px_40px_rgba(168,85,247,0.4)] border border-primary/20 backdrop-blur-md btn-jump active:scale-95 transition-transform"
                     >
                         Start Your Free Audit
                     </a>

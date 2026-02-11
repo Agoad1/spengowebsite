@@ -1,15 +1,16 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import CursorGlow from './components/CursorGlow';
-import ValueDemonstrator from './components/ValueDemonstrator';
+
 import Contact from './components/Contact';
 import MobileCTA from './components/MobileCTA';
 import BackgroundBlobs from './components/BackgroundBlobs';
 import BackgroundEngine from './components/BackgroundEngine';
-import BeforeAfter from './components/BeforeAfter';
+import Pricing from './components/Pricing';
 import RiskReversal from './components/RiskReversal';
+import FirstImpression from './components/FirstImpression';
+import FAQ from './components/FAQ';
 
 export default function App() {
   return (
@@ -21,9 +22,9 @@ export default function App() {
       <Navbar />
       <Hero />
       <Pricing />
-      <BeforeAfter />
-      <ValueDemonstrator />
+      <FirstImpression />
       <Contact />
+      <FAQ />
       <RiskReversal />
       <Footer />
     </div>

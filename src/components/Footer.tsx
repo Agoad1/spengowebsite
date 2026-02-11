@@ -2,27 +2,35 @@ import { Twitter, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-card-border py-8">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-muted text-sm">&copy; 2026 Spengo</p>
-        <div className="flex items-center gap-5">
+    <footer className="border-t border-white/5 py-12 bg-bg relative z-10">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="flex flex-col items-center sm:items-start gap-2">
+          <p className="text-muted/40 text-[11px] font-bold uppercase tracking-[0.2em]">&copy; 2026 Spengo Technologies</p>
+          <p className="text-muted/20 text-[10px] tracking-wider">Engineered for Performance.</p>
+        </div>
+
+        <div className="flex items-center gap-6">
           <a
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted hover:text-body transition-colors"
+            className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center text-muted/60 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 hover:-translate-y-1"
             aria-label="Twitter"
           >
             <Twitter className="w-4 h-4" />
           </a>
           <a
             href="mailto:hello@spengo.com"
-            className="text-muted hover:text-body transition-colors"
+            className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center text-muted/60 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 hover:-translate-y-1"
             aria-label="Email"
           >
             <Mail className="w-4 h-4" />
           </a>
-          <span className="text-muted/50 text-xs">Built by Spengo</span>
+        </div>
+
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.02] border border-white/5">
+          <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-muted/40 text-[10px] font-bold uppercase tracking-widest">System Status: Optimal</span>
         </div>
       </div>
     </footer>
