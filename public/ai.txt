@@ -1,0 +1,127 @@
+# Spengo - High-Converting Website Development
+
+Last Updated: 2026-02-15
+
+---
+
+## About
+
+Spengo builds fast, modern websites that make buying easy and earn trust instantly. We specialize in conversion-focused web development for businesses that need their website to actually work.
+
+**Tagline:** We Make It Easy For Your Website Visitors To Convert
+
+**Core Philosophy:** People don't browse anymore. They land on your site with intent to buy. If it's slow, outdated, or confusing, they're gone in seconds.
+
+---
+
+## The Problem We Solve
+
+### People Don't Browse Anymore
+
+Modern customers have changed. They want answers now, and if they have to wait or search for information, they leave.
+
+**Key Issues:**
+- **People are in a hurry** - Customers don't browse anymore. They want an answer now. If they have to wait or look for it, they'll leave.
+- **If it looks bad, they leave** - If your site looks old or slow, people think your business is old or slow. You lose the sale before they even read a word.
+- **One page doesn't fit everyone** - You shouldn't send every customer to the same front door. We build specific pages for specific goals.
+
+### The 30-Second Decision Window
+
+Visitors decide whether to buy or leave in just 30 seconds. During this critical window, they're asking three questions:
+
+1. **What do you sell?** - 88% of visitors leave if they can't figure this out in 5 seconds
+2. **Do you have what I want?** - Cluttered sites with 40+ elements convert 50% less than clear sites
+3. **How do I buy it?** - Every extra second of confusion costs 7% in conversions
+
+**Our Goal:** Answer all 3 questions instantly. We build sites so clear that visitors know what you sell, find what they want, and buy—all in under 30 seconds.
+
+**Performance Difference:**
+- Confusing Site: 88% bounce rate, 1.5% conversion
+- Clear Site: 12% bounce rate, 3.8% conversion
+
+---
+
+## Services
+
+### Website Development & Optimization
+
+We build and fix websites that convert visitors into customers through:
+
+- **Fast, Modern Design** - Professional sites that load quickly and build instant trust
+- **Conversion-Focused Architecture** - Clear navigation and messaging that guides visitors to buy
+- **Mobile-Optimized Experience** - Perfect performance on all devices
+- **AI Search Optimization (AEO)** - Structured data that makes your site discoverable by AI tools like ChatGPT and Perplexity
+- **Custom Landing Pages** - Specific pages built for specific customer goals
+
+### What We Offer
+
+- New website builds from scratch
+- Existing website audits and refactors
+- Performance optimization
+- Copywriting direction and structural engineering
+- AI-optimized content structure
+
+---
+
+## How It Works
+
+### 4-Step Process
+
+**Step 01: Submit Your Website**
+Tell us your link and your goals. It takes 2 minutes. No credit card required.
+
+**Step 02: We Review & Audit**
+We find the problems and tell you how to fix them. No pointless discovery calls.
+
+**Step 03: We Build the Fix**
+We design and build the improvements with regular updates. You see progress in real-time.
+
+**Step 04: We Go Live**
+The site is fast, professional, and ready to win customers. We make sure everything is perfect.
+
+---
+
+## Pricing
+
+### Free Audit First
+
+1. **You Submit Your Site** - Takes 2 minutes. No credit card. No commitment.
+2. **We Audit Everything** - You'll receive a detailed scope, custom pricing, and technical breakdown. No pointless discovery calls.
+3. **Review The Roadmap & Decide** - We show you exactly what's broken and how to fix it. If you like the plan, we build it. If not, you keep the audit and walk away for free.
+
+**Typical Project Range:** $500 - $1,500
+
+Every site is different. After your audit, we'll give you a price range based on what we find.
+
+**Timeline:** Most technical builds take 2-4 weeks. Design-only upgrades can be faster. You'll get a guaranteed timeline in your fixed-price proposal.
+
+---
+
+## Frequently Asked Questions
+
+### Why don't you do discovery calls?
+Because a clear form gets us the same info in less time. We review your details, scope the project properly, and send you a direct plan. No scheduling friction, no wasted time.
+
+### How long does a project take?
+Most technical builds take 2-4 weeks. Design-only upgrades can be faster. You'll get a guaranteed timeline in your fixed-price proposal.
+
+### What if I already have a website?
+Perfect. We audit your current build, identify where you're losing customers, and refactor it into a site that actually performs. We don't just build from scratch—we fix what's broken.
+
+### Do you write the copy too?
+We provide copywriting direction and structural engineering. If you need full, high-conversion copy, we can scope that into your customized project plan.
+
+### What's the AI optimization exactly?
+AI tools like ChatGPT and Perplexity are replacing traditional Google searches. We structure your site data so it's proof-driven, semantically clear, and easy for both humans and AI to recommend.
+
+---
+
+## Availability
+
+Currently available for March 2026 projects.
+
+---
+
+## Contact
+
+Start your free website audit: https://spengowebsite.vercel.app#start
