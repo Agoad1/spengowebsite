@@ -54,7 +54,7 @@ export default function FirstImpression() {
     };
 
     return (
-        <section ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden bg-bg">
+        <section id="audit" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden bg-bg">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 
                 {/* Header Section */}

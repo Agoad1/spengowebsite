@@ -11,6 +11,7 @@ import Pricing from './components/Pricing';
 import RiskReversal from './components/RiskReversal';
 import FirstImpression from './components/FirstImpression';
 import FAQ from './components/FAQ';
+import SidebarNav from './components/SidebarNav';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <BackgroundEngine />
       <CursorGlow />
       <MobileCTA />
+      <SidebarNav />
       <Navbar />
       <Hero />
       <Pricing />
