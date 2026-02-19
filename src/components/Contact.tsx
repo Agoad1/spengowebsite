@@ -3,19 +3,38 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 export default function Contact() {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        website_url: '',
+        business_type: '',
+        message: '',
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        setError('');
+
+        const { error: submitError } = await supabase
+            .from('submissions')
+            .insert([formData]);
+
+        setLoading(false);
+
+        if (submitError) {
+            setError('Something went wrong. Please try again.');
+            console.error(submitError);
+        } else {
             setSubmitted(true);
-        }, 1500);
+            setFormData({ name: '', email: '', website_url: '', business_type: '', message: '' });
+        }
     };
 
     return (
@@ -93,6 +112,8 @@ export default function Contact() {
                                                     type="text"
                                                     id="name"
                                                     placeholder="Your name"
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                                 />
                                             </div>
@@ -103,6 +124,8 @@ export default function Contact() {
                                                     type="email"
                                                     id="email"
                                                     placeholder="Where should we send your audit?"
+                                                    value={formData.email}
+                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                                 />
                                             </div>
@@ -113,8 +136,28 @@ export default function Contact() {
                                                 type="url"
                                                 id="website"
                                                 placeholder="Your website URL"
+                                                value={formData.website_url}
+                                                onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
                                                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
                                             />
+                                        </div>
+                                        <div className="space-y-3 group">
+                                            <label htmlFor="business_type" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">Business type</label>
+                                            <select
+                                                required
+                                                id="business_type"
+                                                value={formData.business_type}
+                                                onChange={(e) => setFormData({ ...formData, business_type: e.target.value })}
+                                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300 appearance-none cursor-pointer"
+                                            >
+                                                <option value="" disabled>Select your business type</option>
+                                                <option value="E-commerce / Online Store">E-commerce / Online Store</option>
+                                                <option value="SaaS / Tech Startup">SaaS / Tech Startup</option>
+                                                <option value="Local Business / Service">Local Business / Service</option>
+                                                <option value="Agency / Consultancy">Agency / Consultancy</option>
+                                                <option value="Creator / Personal Brand">Creator / Personal Brand</option>
+                                                <option value="Other">Other</option>
+                                            </select>
                                         </div>
                                         <div className="space-y-3 group">
                                             <label htmlFor="message" className="text-[11px] font-bold text-muted uppercase tracking-[0.15em] ml-1 group-focus-within:text-primary transition-colors">What's frustrating you about your current site?</label>
@@ -123,11 +166,14 @@ export default function Contact() {
                                                 id="message"
                                                 rows={4}
                                                 placeholder="What's frustrating you about your current site?"
+                                                value={formData.message}
+                                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-muted/30 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300 resize-none"
                                             />
                                         </div>
 
                                         <div className="pt-6 space-y-4 text-center">
+                                            {error && <p className="text-red-400 text-sm text-center">{error}</p>}
                                             <button
                                                 disabled={loading}
                                                 type="submit"
