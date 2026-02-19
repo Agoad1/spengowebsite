@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, CreditCard, Target, ArrowRight, Timer } from 'lucide-react';

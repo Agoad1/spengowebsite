@@ -1,3 +1,5 @@
+"use client";
+
 
 export const SpengoLogo = ({ className = "w-8 h-8", glow = true }: { className?: string; glow?: boolean }) => {
     return (

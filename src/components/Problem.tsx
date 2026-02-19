@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from 'framer-motion';
 import { Zap, ShieldCheck, Layers, ArrowRight } from 'lucide-react';
 import MagneticButton from './MagneticButton';

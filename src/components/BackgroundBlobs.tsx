@@ -1,3 +1,5 @@
+"use client";
+
 export default function BackgroundBlobs() {
     return (
         <div className="blob-container">
