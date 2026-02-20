@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { trackClick } from '@/lib/analytics';
 
 export default function Contact() {
     const [submitted, setSubmitted] = useState(false);
@@ -21,6 +22,8 @@ export default function Contact() {
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        trackClick('contact_submit');
 
         const { error: submitError } = await supabase
             .from('submissions')

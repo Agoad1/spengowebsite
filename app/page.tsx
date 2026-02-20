@@ -13,10 +13,12 @@ import RiskReversal from '@/components/RiskReversal';
 import FirstImpression from '@/components/FirstImpression';
 import FAQ from '@/components/FAQ';
 import SidebarNav from '@/components/SidebarNav';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 export default function Home() {
     return (
         <div className="relative z-10 min-h-screen">
+            <AnalyticsTracker />
             <BackgroundBlobs />
             <BackgroundEngine />
             <CursorGlow />

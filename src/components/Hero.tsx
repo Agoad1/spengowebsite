@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import MagneticButton from './MagneticButton';
+import { trackClick } from '@/lib/analytics';
 
 export default function Hero() {
   return (
@@ -48,7 +49,7 @@ export default function Hero() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <MagneticButton href="#start">
+              <MagneticButton href="#start" onClick={() => trackClick('hero_start_audit')}>
                 <div className="relative inline-flex items-center gap-2 bg-primary text-white font-jakarta font-semibold px-8 py-4 rounded-lg text-base btn-jump">
                   Start Your Free Audit
                   <span aria-hidden="true" className="text-lg">&rarr;</span>
@@ -57,6 +58,7 @@ export default function Hero() {
 
               <a
                 href="#pricing"
+                onClick={() => trackClick('hero_how_it_works')}
                 className="text-muted hover:text-body transition-colors text-sm font-medium label-tracking"
               >
                 <span className="glow-noise italic">HOW IT WORKS &darr;</span>
