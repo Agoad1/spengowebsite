@@ -21,6 +21,52 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Positioned under navbar links */}
+      <div className="absolute top-24 left-0 right-0 z-20 pointer-events-none hidden lg:block">
+        <div className="max-w-7xl mx-auto px-6 flex justify-end">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              y: [0, -25, 0, 20, 0],
+              x: [0, 15, 0, -10, 0],
+            }}
+            transition={{
+              opacity: { duration: 1, delay: 1.5 },
+              y: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+              x: { duration: 10, repeat: Infinity, ease: "easeInOut" }
+            }}
+          >
+            <div className="relative group">
+              {/* Subtle Ambient Glow */}
+              <motion.div
+                animate={{
+                  opacity: [0.3, 0.5, 0.3],
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute inset-0 bg-primary/30 blur-2xl rounded-full -z-10"
+              />
+
+              {/* The Badge */}
+              <div className="relative flex items-center gap-4 bg-white/[0.05] backdrop-blur-xl border border-white/10 px-6 py-3.5 rounded-2xl">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-50"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary shadow-[0_0_12px_rgba(168,85,247,0.6)]"></span>
+                </span>
+                <span className="text-[12px] font-black text-white/70 uppercase tracking-[0.25em] whitespace-nowrap">
+                  📍 Serving {location}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-32 relative z-10">
         <div className="max-w-4xl">
           <motion.div
@@ -82,18 +128,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:block"
-      >
-        <div className="rotate-90 origin-right">
-          <span className="text-[11px] font-bold text-white/30 uppercase tracking-[0.3em] whitespace-nowrap">
-            📍 Serving {location}
-          </span>
-        </div>
-      </motion.div>
     </section>
   );
 }
