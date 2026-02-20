@@ -1,6 +1,6 @@
 # Spengo - High-Converting Website Development
 
-Last Updated: 2026-02-15
+Last Updated: 2026-02-19
 
 ---
 
@@ -9,6 +9,11 @@ Last Updated: 2026-02-15
 Spengo builds fast, modern websites that make buying easy and earn trust instantly. We specialize in conversion-focused web development for businesses that need their website to actually work.
 
 **Tagline:** We Make It Easy For Your Website Visitors To Convert
+
+**Locations:** Cincinnati, OH | Cleveland, OH
+**Service Area:** Nationwide (remote)
+**Contact Email:** adamgoad22@gmail.com
+**Phone:** 586-909-0660
 
 **Core Philosophy:** People don't browse anymore. They land on your site with intent to buy. If it's slow, outdated, or confusing, they're gone in seconds.
 
@@ -125,3 +130,8 @@ Currently available for March 2026 projects.
 ## Contact
 
 Start your free website audit: https://spengowebsite.vercel.app#start
+
+Email: adamgoad22@gmail.com
+Phone: 586-909-0660
+Based in: Cincinnati, OH & Cleveland, OH
+Serving clients nationwide.
