@@ -1,10 +1,24 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 import { trackClick } from '@/lib/analytics';
 
 export default function Hero() {
+  const [location, setLocation] = useState('across the country');
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.city && data.region) {
+          setLocation(`${data.city}, ${data.region}`);
+        }
+      })
+      .catch(err => console.error('Location fetch error:', err));
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-32 relative z-10">
@@ -67,6 +81,19 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:block"
+      >
+        <div className="rotate-90 origin-right">
+          <span className="text-[11px] font-bold text-white/30 uppercase tracking-[0.3em] whitespace-nowrap">
+            📍 Serving {location}
+          </span>
+        </div>
+      </motion.div>
     </section>
   );
 }
