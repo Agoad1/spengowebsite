@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #a855f7;
+  --cyan: #06b6d4;
+}
+
 html {
   overflow-x: hidden;
 }

@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const sections = [
-    { id: 'home', label: 'HOME' },
-    { id: 'pricing', label: 'PRICING' },
-    { id: 'audit', label: 'AUDIT' },
-    { id: 'start', label: 'JOIN' },
+    { id: 'home', label: 'Home' },
+    { id: 'pricing', label: 'How it works' },
+    { id: 'audit', label: 'The risk' },
+    { id: 'start', label: 'Contact' },
     { id: 'faq', label: 'FAQ' },
 ];
 
@@ -17,16 +17,22 @@ export default function SidebarNav() {
     useEffect(() => {
         const observerOptions = {
             root: null,
-            rootMargin: '-40% 0px -40% 0px',
-            threshold: 0,
+            rootMargin: '0px',
+            threshold: [0.1, 0.5, 0.8],
         };
 
         const observerCallback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                     setActiveSection(entry.target.id);
                 }
             });
+        };
+
+        const handleScroll = () => {
+            if (window.scrollY < 100) {
+                setActiveSection('home');
+            }
         };
 
         const observer = new IntersectionObserver(observerCallback, observerOptions);
@@ -36,7 +42,12 @@ export default function SidebarNav() {
             if (element) observer.observe(element);
         });
 
-        return () => observer.disconnect();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     const scrollToSection = (id: string) => {
@@ -59,13 +70,12 @@ export default function SidebarNav() {
                     >
                         {/* Label */}
                         <motion.span
-                            initial={false}
+                            initial={{ opacity: 0, x: 10 }}
                             animate={{
                                 opacity: isActive ? 1 : 0,
                                 x: isActive ? 0 : 10,
-                                filter: isActive ? 'blur(0px)' : 'blur(4px)'
                             }}
-                            className="text-[10px] font-black tracking-[0.25em] text-white/90 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none"
+                            className="text-[12px] font-bold tracking-tight text-white group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none"
                         >
                             {section.label}
                         </motion.span>
