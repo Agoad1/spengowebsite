@@ -45,19 +45,92 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1"
-            >
-              <span className={link.label === 'How It Works' ? 'glow-noise' : ''}>
-                {link.label}
-              </span>
-            </a>
+            <div key={link.href} className="relative group py-4">
+              {link.label === 'How It Works' ? (
+                <>
+                  <button className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1 flex items-center gap-1">
+                    <span className="glow-noise">{link.label}</span>
+                    <svg className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  <div className="absolute top-full left-[-120px] pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-[60]">
+                    {/* Invisible Bridge */}
+                    <div className="absolute top-0 left-0 right-0 h-4" />
+
+                    <div className="bg-[#0f0f0f] border border-white/10 border-t-2 border-t-primary rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden min-w-[650px] p-7 grid grid-cols-3 gap-0 backdrop-blur-xl">
+                      {/* Column 1 - Services */}
+                      <div className="space-y-3 px-6 border-r border-white/10">
+                        <p className="mb-4 text-white/50 text-[10px] font-bold tracking-widest uppercase">WHAT WE DO</p>
+                        <ul className="space-y-3">
+                          {[
+                            'Free Website Audit',
+                            'Conversion-Focused Design',
+                            'Next.js Development',
+                            'AI Performance Optimization'
+                          ].map((item) => (
+                            <li key={item} className="flex items-center gap-3 group/item cursor-pointer px-2 -ml-2 py-1.5 rounded-lg hover:bg-primary/5 transition-all duration-150">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover/item:bg-primary transition-colors" />
+                              <span className="text-sm text-muted group-hover/item:text-primary transition-colors">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Column 2 - Quick CTA */}
+                      <div className="space-y-3 px-6 border-r border-white/10">
+                        <p className="mb-4 text-white/50 text-[10px] font-bold tracking-widest uppercase">GET STARTED</p>
+                        <div className="space-y-4">
+                          <p className="text-sm text-white font-medium">Ready to stop losing visitors?</p>
+                          <a
+                            href="#start"
+                            className="inline-flex items-center justify-center w-fit px-5 bg-primary hover:bg-primary/90 text-white text-[11px] font-bold py-2.5 rounded-full transition-all btn-jump"
+                          >
+                            Start Your Free Audit →
+                          </a>
+                          <p className="text-[10px] text-muted italic">No credit card. No commitment.</p>
+                        </div>
+                      </div>
+
+                      {/* Column 3 - How It Works Preview */}
+                      <div className="space-y-3 px-6">
+                        <p className="mb-4 text-white/50 text-[10px] font-bold tracking-widest uppercase">THE PROCESS</p>
+                        <div className="space-y-3">
+                          {[
+                            { step: '01', text: 'Submit Your Site' },
+                            { step: '02', text: 'We Audit Everything' },
+                            { step: '03', text: 'Review & Decide' }
+                          ].map((item) => (
+                            <div key={item.step} className="flex gap-3 group/item cursor-pointer px-2 -ml-2 py-1.5 rounded-lg hover:bg-primary/5 transition-all duration-150">
+                              <span className="text-[10px] font-bold text-primary/40 mt-1 group-hover/item:text-primary transition-colors">{item.step}</span>
+                              <span className="text-sm text-muted group-hover/item:text-primary transition-colors">{item.text}</span>
+                            </div>
+                          ))}
+                          <div className="pt-2 px-2">
+                            <a href="#pricing" className="text-xs text-muted hover:text-primary flex items-center gap-1 transition-colors group/link">
+                              See full process
+                              <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <a
+                  href={link.href}
+                  className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1"
+                >
+                  {link.label}
+                </a>
+              )}
+            </div>
           ))}
           <a
             href="#start"
-            className="text-sm text-primary border border-primary/30 hover:border-primary/60 px-4 py-2 rounded-lg btn-jump"
+            className="text-sm text-primary border border-primary/30 hover:border-primary/60 px-4 py-2 rounded-lg btn-jump ml-4"
           >
             Start Your Free Audit
           </a>
