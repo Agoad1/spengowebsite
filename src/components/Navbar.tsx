@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SpengoLogo } from './SpengoLogo';
 
 const navLinks = [
-  { label: 'How It Works', href: '#pricing' },
+  { label: 'How It Works', href: '/#pricing' },
+  { label: 'Changelog', href: '/changelog' },
 ];
 
 export default function Navbar() {
@@ -17,6 +19,9 @@ export default function Navbar() {
     damping: 30,
     restDelta: 0.001
   });
+
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -48,7 +53,8 @@ export default function Navbar() {
             <div key={link.href} className="relative group py-4">
               {link.label === 'How It Works' ? (
                 <>
-                  <button className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1 flex items-center gap-1">
+                  <button className={`text-sm transition-colors duration-200 link-underline pb-1 flex items-center gap-1 ${isActive(link.href) ? 'text-primary' : 'text-muted hover:text-body'
+                    }`}>
                     <span className="glow-noise">{link.label}</span>
                     <svg className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -121,7 +127,8 @@ export default function Navbar() {
               ) : (
                 <a
                   href={link.href}
-                  className="text-sm text-muted hover:text-body transition-colors duration-200 link-underline pb-1"
+                  className={`text-sm transition-colors duration-200 link-underline pb-1 ${isActive(link.href) ? 'text-primary glow-noise' : 'text-muted hover:text-body'
+                    }`}
                 >
                   {link.label}
                 </a>
@@ -158,9 +165,10 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block py-4 text-lg font-outfit text-muted hover:text-white transition-colors active:text-primary active:translate-x-1 duration-200"
+                className={`block py-4 text-lg font-outfit transition-colors active:translate-x-1 duration-200 ${isActive(link.href) ? 'text-primary' : 'text-muted hover:text-white'
+                  }`}
               >
-                <span className={link.label === 'How It Works' ? 'glow-noise' : ''}>
+                <span className={link.label === 'How It Works' || isActive(link.href) ? 'glow-noise' : ''}>
                   {link.label}
                 </span>
               </a>
