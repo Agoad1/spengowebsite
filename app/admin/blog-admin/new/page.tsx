@@ -13,7 +13,10 @@ import {
     CheckCircle2,
     Clock,
     Zap,
-    AlertCircle
+    AlertCircle,
+    Upload,
+    Loader2,
+    Trash2
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,6 +25,7 @@ import ReactMarkdown from 'react-markdown';
 export default function NewPostPage() {
     const [session, setSession] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState("");
     const [previewMode, setPreviewMode] = useState(false);
 
@@ -74,6 +78,50 @@ export default function NewPostPage() {
             .replace(/[\s_-]+/g, '-')
             .replace(/^-+|-+$/g, '');
         setForm(prev => ({ ...prev, slug }));
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Basic validation
+        if (!file.type.startsWith('image/')) {
+            setError("Please upload an image file.");
+            return;
+        }
+
+        setUploading(true);
+        setError("");
+
+        try {
+            // 1. Ensure bucket exists (best effort)
+            await supabase.storage.createBucket('blog-images', { public: true });
+        } catch (err) {
+            // Ignore if already exists
+        }
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random()}-${Date.now()}.${fileExt}`;
+            const filePath = `covers/${fileName}`;
+
+            const { error: uploadError, data } = await supabase.storage
+                .from('blog-images')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('blog-images')
+                .getPublicUrl(filePath);
+
+            setForm(prev => ({ ...prev, cover_image: publicUrl }));
+        } catch (err: any) {
+            console.error(err);
+            setError("Failed to upload image: " + err.message);
+        } finally {
+            setUploading(false);
+        }
     };
 
     if (!session) return null;
@@ -193,20 +241,42 @@ export default function NewPostPage() {
 
                             {/* Cover Image */}
                             <div className="space-y-3">
-                                <label className="text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Cover Image URL</label>
-                                <div className="relative group">
-                                    <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={14} />
+                                <label className="text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Cover Image</label>
+                                <div className="relative">
                                     <input
-                                        type="text"
-                                        value={form.cover_image}
-                                        onChange={(e) => setForm(prev => ({ ...prev, cover_image: e.target.value }))}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all"
-                                        placeholder="https://images..."
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="hidden"
+                                        id="cover-upload"
+                                        disabled={uploading}
                                     />
+                                    <label
+                                        htmlFor="cover-upload"
+                                        className={`w-full flex flex-col items-center justify-center gap-3 px-4 py-8 bg-white/5 border border-dashed border-white/20 rounded-2xl cursor-pointer hover:bg-white/10 hover:border-primary/50 transition-all ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        {uploading ? (
+                                            <Loader2 size={24} className="text-primary animate-spin" />
+                                        ) : (
+                                            <Upload size={24} className="text-muted group-hover:text-primary transition-colors" />
+                                        )}
+                                        <div className="text-center">
+                                            <span className="text-xs font-bold text-white block mb-1">
+                                                {uploading ? "Uploading..." : "Click to Upload"}
+                                            </span>
+                                            <span className="text-[10px] text-muted">PNG, JPG, WEBP (Max 5MB)</span>
+                                        </div>
+                                    </label>
                                 </div>
                                 {form.cover_image && (
-                                    <div className="mt-4 aspect-video rounded-2xl overflow-hidden border border-white/10">
+                                    <div className="relative group mt-4 aspect-video rounded-2xl overflow-hidden border border-white/10">
                                         <img src={form.cover_image} alt="" className="w-full h-full object-cover" />
+                                        <button
+                                            onClick={() => setForm(prev => ({ ...prev, cover_image: "" }))}
+                                            className="absolute top-2 right-2 p-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >
+                                            <Trash2 size={14} />
+                                        </button>
                                     </div>
                                 )}
                             </div>
