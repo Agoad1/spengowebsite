@@ -1,81 +1,320 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
+import {
+    Plus,
+    Edit3,
+    Trash2,
+    Eye,
+    Globe,
+    Zap,
+    LogOut,
+    ArrowLeft,
+    Search,
+    Clock,
+    CheckCircle2,
+    FileText,
+    MoreHorizontal
+} from "lucide-react";
 import Link from "next/link";
-import { PlusCircle, Pencil, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  is_published: boolean;
-  published_at: string;
-  created_at: string;
+    id: string;
+    title: string;
+    slug: string;
+    is_published: boolean;
+    published_at: string | null;
+    created_at: string;
+    cover_image: string | null;
 }
 
-export default function AdminBlogPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function BlogAdminPage() {
+    const [session, setSession] = useState<any>(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [authLoading, setAuthLoading] = useState(false);
+    const [authError, setAuthError] = useState("");
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [fetching, setFetching] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter();
 
-  const fetchPosts = async () => {
-    const { data, error } = await supabase
-      .from("posts")
-      .select("id, title, slug, is_published, published_at, created_at")
-      .order("created_at", { ascending: false });
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
 
-    if (!error) setPosts(data || []);
-    setLoading(false);
-  };
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
 
-  const deletePost = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this post?")) return;
-    await supabase.from("posts").delete().eq("id", id);
-    fetchPosts();
-  };
+        return () => subscription.unsubscribe();
+    }, []);
 
-  if (loading) return <div className="text-center py-20">Loading...</div>;
+    useEffect(() => {
+        if (session) {
+            fetchPosts();
+        }
+    }, [session]);
 
-  return (
-    <main className="max-w-4xl mx-auto px-6 py-20">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="text-3xl font-bold">Blog Posts</h1>
-        <Link href="/admin/blog-admin/new">
-          <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-            <PlusCircle size={18} /> New Post
-          </button>
-        </Link>
-      </div>
-      <div className="grid gap-4">
-        {posts.map((post) => (
-          <div key={post.id} className="flex items-center justify-between border border-gray-200 rounded-xl p-5">
-            <div>
-              <h2 className="font-semibold text-lg">{post.title}</h2>
-              <p className="text-sm text-gray-400">/{post.slug}</p>
-              <span className={`text-xs px-2 py-1 rounded-full mt-2 inline-block ${post.is_published ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
-                {post.is_published ? "Published" : "Draft"}
-              </span>
+    const fetchPosts = async () => {
+        setFetching(true);
+        const { data, error } = await supabase
+            .from("posts")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error(error);
+        } else {
+            setPosts(data || []);
+        }
+        setFetching(false);
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this post?")) return;
+
+        const { error } = await supabase
+            .from("posts")
+            .delete()
+            .eq("id", id);
+
+        if (error) {
+            alert("Error deleting post: " + error.message);
+        } else {
+            setPosts(prev => prev.filter(p => p.id !== id));
+        }
+    };
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setAuthLoading(true);
+        setAuthError("");
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) setAuthError(error.message);
+        setAuthLoading(false);
+    };
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+    };
+
+    const filteredPosts = useMemo(() => {
+        return posts.filter(p =>
+            p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.slug.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [posts, searchQuery]);
+
+    if (!session) {
+        return (
+            <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 font-jakarta">
+                <div className="w-full max-w-md bg-white/[0.03] border border-white/10 rounded-2xl p-8 backdrop-blur-xl text-white">
+                    <div className="flex justify-center mb-8">
+                        <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/20">
+                            <Zap className="text-primary w-6 h-6" />
+                        </div>
+                    </div>
+                    <h1 className="text-2xl font-bold mb-2 text-center font-outfit">Blog Admin</h1>
+                    <p className="text-muted text-sm text-center mb-8">Sign in to manage your blog articles.</p>
+
+                    <form onSubmit={handleLogin} className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-muted/20"
+                                placeholder="admin@spengo.com"
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-muted/20"
+                                placeholder="••••••••"
+                                required
+                            />
+                        </div>
+                        {authError && <p className="text-red-400 text-sm text-center font-medium">{authError}</p>}
+                        <button
+                            type="submit"
+                            disabled={authLoading}
+                            className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
+                        >
+                            {authLoading ? "Authenticating..." : "Sign In"}
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div className="flex gap-3">
-              <Link href={`/admin/blog-admin/${post.id}/edit`}>
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                  <Pencil size={18} />
-                </button>
-              </Link>
-              <button onClick={() => deletePost(post.id)} className="p-2 hover:bg-red-50 text-red-500 rounded-lg transition">
-                <Trash2 size={18} />
-              </button>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-[#0a0a0a] text-white font-jakarta p-4 md:p-8 lg:p-12">
+            <div className="max-w-7xl mx-auto space-y-12">
+                {/* Header */}
+                <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                        <Link href="/admin" className="p-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                            <ArrowLeft size={18} />
+                        </Link>
+                        <div>
+                            <h1 className="text-3xl font-bold font-outfit tracking-tight">Blog Management</h1>
+                            <p className="text-muted text-sm mt-1">Create, edit, and publish your insights.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/admin/blog-admin/new"
+                            className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-bold hover:opacity-90 transition-all active:scale-95"
+                        >
+                            <Plus size={18} />
+                            New Article
+                        </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-bold hover:bg-white/10 transition-all active:scale-95"
+                        >
+                            <LogOut size={16} />
+                            Sign Out
+                        </button>
+                    </div>
+                </header>
+
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Stats */}
+                    <div className="lg:col-span-1 space-y-6">
+                        <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                            <h3 className="text-[11px] font-bold text-muted uppercase tracking-[0.2em] mb-4">Blog Overview</h3>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-muted">Total Articles</span>
+                                    <span className="text-lg font-bold text-white">{posts.length}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-muted">Published</span>
+                                    <span className="text-lg font-bold text-emerald-400">{posts.filter(p => p.is_published).length}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-muted">Drafts</span>
+                                    <span className="text-lg font-bold text-amber-400">{posts.filter(p => !p.is_published).length}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Posts List */}
+                    <div className="lg:col-span-3 space-y-6">
+                        {/* Search */}
+                        <div className="relative group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={20} />
+                            <input
+                                type="text"
+                                placeholder="Search articles by title or slug..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-muted/30"
+                            />
+                        </div>
+
+                        <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-sm">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-white/10 bg-white/[0.02]">
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Article</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Status</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Published Date</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em] text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-white/[0.05]">
+                                        {fetching ? (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-20 text-center">
+                                                    <div className="flex flex-col items-center gap-3">
+                                                        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                                                        <p className="text-muted text-sm font-medium">Loading articles...</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ) : filteredPosts.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-20 text-center text-muted font-medium">
+                                                    {searchQuery ? "No articles matching your search." : "No articles yet."}
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            filteredPosts.map((post) => (
+                                                <tr key={post.id} className="hover:bg-white/[0.02] transition-colors group">
+                                                    <td className="px-6 py-5">
+                                                        <div className="flex items-center gap-4">
+                                                            {post.cover_image && (
+                                                                <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/10 shrink-0">
+                                                                    <img src={post.cover_image} className="w-full h-full object-cover" alt="" />
+                                                                </div>
+                                                            )}
+                                                            <div>
+                                                                <div className="font-bold text-white mb-0.5">{post.title}</div>
+                                                                <div className="text-[10px] text-muted font-mono">{post.slug}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5">
+                                                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${post.is_published
+                                                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                                            : 'bg-amber-500/10 border-amber-500/20 text-amber-400'}`}>
+                                                            {post.is_published ? 'Published' : 'Draft'}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-5 text-sm text-muted">
+                                                        {post.published_at
+                                                            ? new Date(post.published_at).toLocaleDateString()
+                                                            : 'Not published'}
+                                                    </td>
+                                                    <td className="px-6 py-5">
+                                                        <div className="flex items-center justify-end gap-2">
+                                                            <Link
+                                                                href={`/blog/${post.slug}`}
+                                                                target="_blank"
+                                                                className="p-2 text-muted hover:text-white transition-colors"
+                                                            >
+                                                                <Eye size={18} />
+                                                            </Link>
+                                                            <Link
+                                                                href={`/admin/blog-admin/${post.id}/edit`}
+                                                                className="p-2 text-muted hover:text-primary transition-colors"
+                                                            >
+                                                                <Edit3 size={18} />
+                                                            </Link>
+                                                            <button
+                                                                onClick={() => handleDelete(post.id)}
+                                                                className="p-2 text-muted hover:text-red-400 transition-colors"
+                                                            >
+                                                                <Trash2 size={18} />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        ))}
-        {posts.length === 0 && (
-          <p className="text-gray-400 text-center py-10">No posts yet. Create your first one!</p>
-        )}
-      </div>
-    </main>
-  );
+        </div>
+    );
 }

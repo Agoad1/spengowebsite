@@ -7,6 +7,7 @@ import { SpengoLogo } from './SpengoLogo';
 
 const navLinks = [
   { label: 'How It Works', href: '/#pricing' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Changelog', href: '/changelog' },
 ];
 

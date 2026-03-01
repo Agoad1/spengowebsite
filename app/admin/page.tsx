@@ -19,8 +19,10 @@ import {
     Eye,
     BarChart3,
     Activity,
-    MousePointer2
+    MousePointer2,
+    FileText
 } from "lucide-react";
+import Link from "next/link";
 
 interface Submission {
     id: string;
@@ -257,13 +259,22 @@ export default function AdminPage() {
                         <h1 className="text-3xl font-bold font-outfit tracking-tight">Analytics Dashboard</h1>
                         <p className="text-muted text-sm mt-1">Lead management and conversion metrics.</p>
                     </div>
-                    <button
-                        onClick={handleLogout}
-                        className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-bold hover:bg-white/10 transition-all active:scale-95"
-                    >
-                        <LogOut size={16} />
-                        Sign Out
-                    </button>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/admin/blog-admin"
+                            className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg text-sm font-bold text-primary hover:bg-primary/20 transition-all active:scale-95"
+                        >
+                            <FileText size={16} />
+                            Manage Blog
+                        </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-bold hover:bg-white/10 transition-all active:scale-95"
+                        >
+                            <LogOut size={16} />
+                            Sign Out
+                        </button>
+                    </div>
                 </header>
 
                 <section className="space-y-6">
@@ -385,9 +396,9 @@ export default function AdminPage() {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${event.event_type === 'page_view' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                                            event.event_type === 'click' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
-                                                                event.event_type === 'scroll' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                                                                    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                                        event.event_type === 'click' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+                                                            event.event_type === 'scroll' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                                                                'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
                                                         }`}>
                                                         {event.event_type.replace('_', ' ')}
                                                     </span>
