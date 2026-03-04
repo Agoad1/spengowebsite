@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SpengoLogo } from './SpengoLogo';
+import { Search } from 'lucide-react';
+import SearchOverlay from './SearchOverlay';
 
 const navLinks = [
+  { label: 'Services', href: '/services' },
   { label: 'How It Works', href: '/#pricing' },
   { label: 'Blog', href: '/blog' },
   { label: 'Changelog', href: '/changelog' },
@@ -14,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -136,23 +140,41 @@ export default function Navbar() {
               )}
             </div>
           ))}
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="p-2 text-muted hover:text-primary transition-colors hover:bg-white/5 rounded-full ml-2"
+            aria-label="Search"
+          >
+            <Search className="w-5 h-5" />
+          </button>
           <a
             href="#start"
-            className="text-sm text-primary border border-primary/30 hover:border-primary/60 px-4 py-2 rounded-lg btn-jump ml-4"
+            className="text-sm text-primary border border-primary/30 hover:border-primary/60 px-4 py-2 rounded-lg btn-jump ml-2"
           >
             Start Your Free Audit
           </a>
         </div>
 
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          aria-label="Toggle menu"
-        >
-          <span className={`block w-5 h-px bg-body transition-all duration-200 ${mobileOpen ? 'rotate-45 translate-y-[3.5px]' : ''}`} />
-          <span className={`block w-5 h-px bg-body transition-all duration-200 ${mobileOpen ? '-rotate-45 -translate-y-[3.5px]' : ''}`} />
-        </button>
+        <div className="md:hidden flex items-center gap-3">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="p-2 text-muted hover:text-primary transition-colors"
+            aria-label="Search"
+          >
+            <Search className="w-6 h-6" />
+          </button>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex flex-col gap-1.5 p-2"
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-5 h-px bg-body transition-all duration-200 ${mobileOpen ? 'rotate-45 translate-y-[3.5px]' : ''}`} />
+            <span className={`block w-5 h-px bg-body transition-all duration-200 ${mobileOpen ? '-rotate-45 -translate-y-[3.5px]' : ''}`} />
+          </button>
+        </div>
       </div>
+
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {mobileOpen && (
         <motion.div
