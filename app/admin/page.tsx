@@ -23,6 +23,7 @@ import {
     FileText
 } from "lucide-react";
 import Link from "next/link";
+import AdminSidebar from "@/components/AdminSidebar";
 
 interface Submission {
     id: string;
@@ -251,175 +252,162 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white font-jakarta p-4 md:p-8 lg:p-12">
-            <div className="max-w-7xl mx-auto space-y-12">
-                {/* Header */}
-                <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
-                        <h1 className="text-3xl font-bold font-outfit tracking-tight">Analytics Dashboard</h1>
-                        <p className="text-muted text-sm mt-1">Lead management and conversion metrics.</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href="/admin/blog-admin"
-                            className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg text-sm font-bold text-primary hover:bg-primary/20 transition-all active:scale-95"
-                        >
-                            <FileText size={16} />
-                            Manage Blog
-                        </Link>
-                        <button
-                            onClick={handleLogout}
-                            className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-bold hover:bg-white/10 transition-all active:scale-95"
-                        >
-                            <LogOut size={16} />
-                            Sign Out
-                        </button>
-                    </div>
-                </header>
-
-                <section className="space-y-6">
-                    <div className="flex items-center gap-2">
-                        <Users className="text-primary" size={20} />
-                        <h2 className="text-xl font-bold font-outfit">Leads Management</h2>
-                    </div>
-
-                    {/* Stat Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                        <StatCard label="Total Leads" value={leadStats.total} icon={<Users size={20} />} color="text-white" />
-                        <StatCard label="New This Week" value={leadStats.newThisWeek} icon={<Zap size={20} />} color="text-emerald-400" />
-                        <StatCard label="Contacted" value={leadStats.contacted} icon={<MessageSquare size={20} />} color="text-blue-400" />
-                        <StatCard label="Closed" value={leadStats.closed} icon={<CheckCircle2 size={20} />} color="text-muted" />
-                    </div>
-
-                    {/* Search & Actions */}
-                    <div className="relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={20} />
-                        <input
-                            type="text"
-                            placeholder="Search leads by name or email..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-muted/30"
-                        />
-                    </div>
-
-                    {/* Leads Table */}
-                    <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-sm">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-white/10 bg-white/[0.02]">
-                                        <th className="w-12 px-6 py-5"></th>
-                                        <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Date</th>
-                                        <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Name</th>
-                                        <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Email</th>
-                                        <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Business Type</th>
-                                        <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/[0.05]">
-                                    {fetching ? (
-                                        <tr>
-                                            <td colSpan={6} className="px-6 py-20 text-center">
-                                                <div className="flex flex-col items-center gap-3">
-                                                    <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                                                    <p className="text-muted text-sm font-medium">Loading submissions...</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ) : filteredSubmissions.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={6} className="px-6 py-20 text-center text-muted font-medium">
-                                                {searchQuery ? "No leads matching your search." : "No leads captured yet."}
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        filteredSubmissions.map((sub) => (
-                                            <SubmissionRow
-                                                key={sub.id}
-                                                sub={sub}
-                                                isExpanded={expandedId === sub.id}
-                                                onToggle={() => setExpandedId(expandedId === sub.id ? null : sub.id)}
-                                                onStatusChange={(status) => updateStatus(sub.id, status)}
-                                            />
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
+        <div className="min-h-screen bg-[#0a0a0a] text-white font-jakarta flex flex-col md:flex-row">
+            <AdminSidebar currentPath="/admin" onLogout={handleLogout} />
+            <div className="flex-1 p-4 md:p-8 lg:p-12 h-screen overflow-y-auto md:w-[calc(100%-16rem)]">
+                <div className="max-w-7xl mx-auto space-y-12">
+                    {/* Header */}
+                    <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h1 className="text-3xl font-bold font-outfit tracking-tight">Analytics Dashboard</h1>
+                            <p className="text-muted text-sm mt-1">Lead management and conversion metrics.</p>
                         </div>
-                    </div>
-                </section>
+                    </header>
 
-                {/* Site Analytics Section */}
-                <section className="space-y-6 pt-8 border-t border-white/10">
-                    <div className="flex items-center gap-2">
-                        <BarChart3 className="text-primary" size={20} />
-                        <h2 className="text-xl font-bold font-outfit">Site Analytics</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                        <StatCard label="Total Page Views" value={analyticsStats.pageViews} icon={<Eye size={20} />} color="text-cyan-400" />
-                        <StatCard label="Unique Visitors" value={analyticsStats.uniqueVisitors} icon={<Users size={20} />} color="text-purple-400" />
-                        <StatCard label="Avg Time on Site" value={analyticsStats.avgTime} icon={<Clock size={20} />} color="text-emerald-400" />
-                        <StatCard label="Avg Scroll Depth" value={analyticsStats.avgScroll} icon={<BarChart3 size={20} />} color="text-amber-400" />
-                    </div>
-
-                    <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-sm">
-                        <div className="px-6 py-5 border-b border-white/10 bg-white/[0.02] flex items-center gap-2">
-                            <Activity size={16} className="text-primary" />
-                            <h3 className="text-sm font-bold uppercase tracking-[0.1em]">Recent Activity</h3>
+                    <section className="space-y-6">
+                        <div className="flex items-center gap-2">
+                            <Users className="text-primary" size={20} />
+                            <h2 className="text-xl font-bold font-outfit">Leads Management</h2>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-white/10 bg-white/[0.01]">
-                                        <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Time</th>
-                                        <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Event Type</th>
-                                        <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Details</th>
-                                        <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Session ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/[0.03] text-sm">
-                                    {fetching ? (
-                                        <tr>
-                                            <td colSpan={4} className="px-6 py-12 text-center text-muted">Loading activity...</td>
+
+                        {/* Stat Cards */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                            <StatCard label="Total Leads" value={leadStats.total} icon={<Users size={20} />} color="text-white" />
+                            <StatCard label="New This Week" value={leadStats.newThisWeek} icon={<Zap size={20} />} color="text-emerald-400" />
+                            <StatCard label="Contacted" value={leadStats.contacted} icon={<MessageSquare size={20} />} color="text-blue-400" />
+                            <StatCard label="Closed" value={leadStats.closed} icon={<CheckCircle2 size={20} />} color="text-muted" />
+                        </div>
+
+                        {/* Search & Actions */}
+                        <div className="relative group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={20} />
+                            <input
+                                type="text"
+                                placeholder="Search leads by name or email..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-muted/30"
+                            />
+                        </div>
+
+                        {/* Leads Table */}
+                        <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-sm">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-white/10 bg-white/[0.02]">
+                                            <th className="w-12 px-6 py-5"></th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Date</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Name</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Email</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Business Type</th>
+                                            <th className="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-[0.2em]">Status</th>
                                         </tr>
-                                    ) : recentActivity.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={4} className="px-6 py-12 text-center text-muted">No activity recorded yet.</td>
-                                        </tr>
-                                    ) : (
-                                        recentActivity.map((event) => (
-                                            <tr key={event.id} className="hover:bg-white/[0.01] transition-colors">
-                                                <td className="px-6 py-4 text-muted whitespace-nowrap">
-                                                    {formatRelativeTime(event.created_at)}
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${event.event_type === 'page_view' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                                        event.event_type === 'click' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
-                                                            event.event_type === 'scroll' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                                                                'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                                                        }`}>
-                                                        {event.event_type.replace('_', ' ')}
-                                                    </span>
-                                                </td>
-                                                <td className="px-6 py-4 text-white font-medium">
-                                                    {event.event_type === 'click' && `Clicked "${event.event_data?.button}"`}
-                                                    {event.event_type === 'scroll' && `Reached ${event.event_data?.depth}% depth`}
-                                                    {event.event_type === 'time_on_site' && `Spent ${event.event_data?.seconds}s on site`}
-                                                    {event.event_type === 'page_view' && `Viewed ${event.page}`}
-                                                </td>
-                                                <td className="px-6 py-4 text-muted font-mono text-[10px] whitespace-nowrap">
-                                                    {event.session_id.substring(0, 8)}...
+                                    </thead>
+                                    <tbody className="divide-y divide-white/[0.05]">
+                                        {fetching ? (
+                                            <tr>
+                                                <td colSpan={6} className="px-6 py-20 text-center">
+                                                    <div className="flex flex-col items-center gap-3">
+                                                        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                                                        <p className="text-muted text-sm font-medium">Loading submissions...</p>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
+                                        ) : filteredSubmissions.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={6} className="px-6 py-20 text-center text-muted font-medium">
+                                                    {searchQuery ? "No leads matching your search." : "No leads captured yet."}
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            filteredSubmissions.map((sub) => (
+                                                <SubmissionRow
+                                                    key={sub.id}
+                                                    sub={sub}
+                                                    isExpanded={expandedId === sub.id}
+                                                    onToggle={() => setExpandedId(expandedId === sub.id ? null : sub.id)}
+                                                    onStatusChange={(status) => updateStatus(sub.id, status)}
+                                                />
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+
+                    {/* Site Analytics Section */}
+                    <section className="space-y-6 pt-8 border-t border-white/10">
+                        <div className="flex items-center gap-2">
+                            <BarChart3 className="text-primary" size={20} />
+                            <h2 className="text-xl font-bold font-outfit">Site Analytics</h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                            <StatCard label="Total Page Views" value={analyticsStats.pageViews} icon={<Eye size={20} />} color="text-cyan-400" />
+                            <StatCard label="Unique Visitors" value={analyticsStats.uniqueVisitors} icon={<Users size={20} />} color="text-purple-400" />
+                            <StatCard label="Avg Time on Site" value={analyticsStats.avgTime} icon={<Clock size={20} />} color="text-emerald-400" />
+                            <StatCard label="Avg Scroll Depth" value={analyticsStats.avgScroll} icon={<BarChart3 size={20} />} color="text-amber-400" />
+                        </div>
+
+                        <div className="bg-white/[0.03] border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-sm">
+                            <div className="px-6 py-5 border-b border-white/10 bg-white/[0.02] flex items-center gap-2">
+                                <Activity size={16} className="text-primary" />
+                                <h3 className="text-sm font-bold uppercase tracking-[0.1em]">Recent Activity</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-white/10 bg-white/[0.01]">
+                                            <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Time</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Event Type</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Details</th>
+                                            <th className="px-6 py-4 text-[10px] font-bold text-muted uppercase tracking-widest whitespace-nowrap">Session ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-white/[0.03] text-sm">
+                                        {fetching ? (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-12 text-center text-muted">Loading activity...</td>
+                                            </tr>
+                                        ) : recentActivity.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-12 text-center text-muted">No activity recorded yet.</td>
+                                            </tr>
+                                        ) : (
+                                            recentActivity.map((event) => (
+                                                <tr key={event.id} className="hover:bg-white/[0.01] transition-colors">
+                                                    <td className="px-6 py-4 text-muted whitespace-nowrap">
+                                                        {formatRelativeTime(event.created_at)}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${event.event_type === 'page_view' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
+                                                            event.event_type === 'click' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+                                                                event.event_type === 'scroll' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                                                                    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                                            }`}>
+                                                            {event.event_type.replace('_', ' ')}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-white font-medium">
+                                                        {event.event_type === 'click' && `Clicked "${event.event_data?.button}"`}
+                                                        {event.event_type === 'scroll' && `Reached ${event.event_data?.depth}% depth`}
+                                                        {event.event_type === 'time_on_site' && `Spent ${event.event_data?.seconds}s on site`}
+                                                        {event.event_type === 'page_view' && `Viewed ${event.page}`}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-muted font-mono text-[10px] whitespace-nowrap">
+                                                        {event.session_id.substring(0, 8)}...
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     );
