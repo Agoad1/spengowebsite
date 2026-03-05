@@ -62,6 +62,19 @@ export default function NewPostPage() {
 
             if (insertError) throw insertError;
 
+            // Trigger vector embedding upsert for search
+            const description = form.content ? form.content.slice(0, 200).replace(/\n/g, ' ') + '...' : '';
+            await fetch('/api/embed', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    url: `/blog/${form.slug}`,
+                    title: form.title,
+                    description: description,
+                    action: 'upsert'
+                })
+            });
+
             router.push("/admin/blog-admin");
         } catch (err: any) {
             setError(err.message);
