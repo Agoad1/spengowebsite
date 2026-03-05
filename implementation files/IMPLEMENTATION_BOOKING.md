@@ -133,8 +133,9 @@ We will introduce or expand the following tables to manage bookings, history, an
 ## 6. Implementation Phases
 
 **Phase 1: Database & Role Infrastructure**
-1.  Deploy Supabase SQL migrations to create `users` (with roles), `booking_topics`, `session_categories`, `sessions`, `bookings`, `calendar_availability`, and `history_logs`.
-2.  Set up Row Level Security (RLS) ensuring admins can read/write everything, but users can only read/write their own data.
+1.  Create all tables defined in Section 4 (Database Schema Overview).
+2.  Deploy Supabase SQL migrations to create `users` (with roles), `booking_topics`, `session_categories`, `sessions`, `bookings`, `calendar_availability`, and `history_logs`.
+3.  Set up Row Level Security (RLS) ensuring admins can read/write everything, but users can only read/write their own data.
 
 **Phase 2: Admin Dashboard Extension & Session Creator**
 1.  Extend the existing `/admin` layout to include navigation for Sessions, Categories/Topics, Bookings, Clients, Calendar, and Reports.

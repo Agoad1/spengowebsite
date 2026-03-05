@@ -21,9 +21,12 @@ If no tracking issue exists for the current task:
     - **Labels**: Apply relevant labels (e.g., `enhancement`, `bug`, `documentation`).
     - **Assignee**: Assign to the current user (e.g., `Agoad1`).
 
-### Phase B: Execution & Updates
+### Phase B: Execution (During Work)
+- **Branching**: Specific branches should be created for the issue.
+    - *Naming Convention*: `feat/issue-ID-short-description` or `fix/issue-ID-short-description`.
+- **Commits**: All commit messages must reference the issue ID.
+    - *Format*: `[#ISSUE_ID] Commit message` (e.g., `[#12] Add responsive styles to header`)
 - **Progress Reporting**: For tasks taking more than 15 minutes or involving multiple files, the agent MUST add a comment to the issue summarizing progress (e.g., "Updated navbar styling; moving to search logic implementation").
-- **Linking**: When creating files or commits, mention the issue number in the commit message or comment.
 
 ### Phase C: Completion
 - **Verification**: Once the task is complete and verified, the agent MUST update the issue.
