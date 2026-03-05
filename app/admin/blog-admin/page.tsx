@@ -75,7 +75,7 @@ export default function BlogAdminPage() {
         setFetching(false);
     };
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id: string, slug: string) => {
         if (!confirm("Are you sure you want to delete this post?")) return;
 
         const { error } = await supabase
@@ -87,6 +87,11 @@ export default function BlogAdminPage() {
             alert("Error deleting post: " + error.message);
         } else {
             setPosts(prev => prev.filter(p => p.id !== id));
+            fetch('/api/embed', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: `/blog/${slug}`, action: 'delete' })
+            }).catch(e => console.error('Failed to delete embedding', e));
         }
     };
 
@@ -298,7 +303,7 @@ export default function BlogAdminPage() {
                                                                 <Edit3 size={18} />
                                                             </Link>
                                                             <button
-                                                                onClick={() => handleDelete(post.id)}
+                                                                onClick={() => handleDelete(post.id, post.slug)}
                                                                 className="p-2 text-muted hover:text-red-400 transition-colors"
                                                             >
                                                                 <Trash2 size={18} />

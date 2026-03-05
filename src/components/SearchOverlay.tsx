@@ -2,30 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, CornerDownLeft } from 'lucide-react';
-import Fuse from 'fuse.js';
+import { Search, X, CornerDownLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const searchIndex = [
-    { title: "Home", description: "We make it easy for your website visitors to convert. Fast, modern websites that earn trust instantly.", url: "/" },
-    { title: "How It Works", description: "Submit your site, we audit everything, you review the roadmap and decide.", url: "/#pricing" },
-    { title: "Services", description: "Browse our service packages — Tier 1, Tier 2, Tier 3, and Tier X custom builds.", url: "/services" },
-    { title: "Tier 1", description: "Foundation package. Includes website or landing page and basic SEO.", url: "/services/tier-1" },
-    { title: "Tier 2", description: "System package. Includes everything in Tier 1 plus lead capture, FAQ bot, email follow-up automation, and booking CRM.", url: "/services/tier-2" },
-    { title: "Tier 3", description: "Full automation package. Includes everything in Tier 2 plus full automations, AEO optimization, and phone caller automation.", url: "/services/tier-3" },
-    { title: "Tier X", description: "Custom build. Fully tailored system built around your exact business needs. Quote-based.", url: "/services/tier-x" },
-    { title: "Website & Landing Page", description: "High-converting websites and landing pages built to earn trust and drive action.", url: "/services/website-landing-page" },
-    { title: "Automations", description: "Business automations that eliminate manual work and keep your operation running without you.", url: "/services/automations" },
-    { title: "Booking CRM", description: "Booking and CRM systems that manage your clients, appointments, and follow-ups automatically.", url: "/services/booking-crm" },
-    { title: "FAQ Bot & Lead Capture", description: "AI-powered FAQ bots that answer questions and capture leads around the clock.", url: "/services/faq-bot-lead-capture" },
-    { title: "SEO & AEO Optimization", description: "Search engine and answer engine optimization to get your business found online.", url: "/services/seo-aeo-optimization" },
-    { title: "Email Follow-up Automation", description: "Automated email sequences that follow up with leads so you never lose a potential client.", url: "/services/email-follow-up" },
-    { title: "Phone Caller Automation", description: "Automated phone caller systems that reach out to leads and clients without manual dialing.", url: "/services/phone-caller-automation" },
-    { title: "Blog", description: "Insights on building high-converting websites, AI optimization, and digital strategy.", url: "/blog" },
-    { title: "Changelog", description: "Track updates and improvements to Spengo's services and platform.", url: "/changelog" },
-    { title: "Contact", description: "Let's build your conversion engine. Start your free audit today.", url: "/#start" }
-];
 
 interface SearchOverlayProps {
     isOpen: boolean;
@@ -34,15 +14,12 @@ interface SearchOverlayProps {
 
 export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     const [query, setQuery] = useState('');
+    const [debouncedQuery, setDebouncedQuery] = useState('');
     const [results, setResults] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
-
-    const fuse = new Fuse(searchIndex, {
-        keys: ['title', 'description'],
-        threshold: 0.3,
-        includeMatches: true,
-    });
 
     useEffect(() => {
         if (isOpen) {
@@ -52,6 +29,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             document.body.style.overflow = 'auto';
             setQuery('');
             setResults([]);
+            setError(false);
         }
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -66,43 +44,44 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }, [isOpen, onClose]);
 
     useEffect(() => {
-        if (query.trim()) {
-            const searchResults = fuse.search(query);
-            setResults(searchResults);
-        } else {
-            setResults([]);
-        }
+        const handler = setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 300);
+        return () => clearTimeout(handler);
     }, [query]);
 
-    const highlightText = (text: string, matches: any[], key: string) => {
-        if (!matches) return text;
-        const match = matches.find((m: any) => m.key === key);
-        if (!match) return text;
-
-        const parts: React.ReactNode[] = [];
-        let lastIndex = 0;
-
-        // Fuse matches are sorted by beginning of range
-        match.indices.forEach(([start, end]: [number, number]) => {
-            // Add text before match
-            if (start > lastIndex) {
-                parts.push(text.slice(lastIndex, start));
+    useEffect(() => {
+        const fetchResults = async () => {
+            if (debouncedQuery.trim()) {
+                setIsLoading(true);
+                try {
+                    const response = await fetch(`/api/search?query=${encodeURIComponent(debouncedQuery)}`);
+                    const data = await response.json();
+                    if (data.success && data.results) {
+                        setResults(data.results);
+                        setError(false);
+                    } else {
+                        setResults([]);
+                        setError(data.error ? true : false);
+                    }
+                } catch (error) {
+                    console.error("Search API error:", error);
+                    setResults([]);
+                    setError(true);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                setResults([]);
+                setIsLoading(false);
+                setError(false);
             }
-            // Add matched text with highlight
-            parts.push(
-                <span key={`${start}-${end}`} className="text-primary font-bold">
-                    {text.slice(start, end + 1)}
-                </span>
-            );
-            lastIndex = end + 1;
-        });
+        };
+        fetchResults();
+    }, [debouncedQuery]);
 
-        // Add remaining text
-        if (lastIndex < text.length) {
-            parts.push(text.slice(lastIndex));
-        }
-
-        return parts;
+    const highlightText = (text: string) => {
+        return text;
     };
 
     return (
@@ -112,7 +91,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[100] flex items-start justify-center pt-[10vh] px-4 sm:px-6"
+                    className="fixed inset-0 z-[100] flex items-start justify-center pt-0 md:pt-[10vh] px-0 md:px-6"
                 >
                     {/* Backdrop */}
                     <div
@@ -125,7 +104,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         initial={{ scale: 0.95, opacity: 0, y: -20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: -20 }}
-                        className="relative w-full max-w-2xl bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                        className="relative w-full h-full md:h-auto max-w-2xl bg-[#0f0f0f] md:border border-white/10 rounded-none md:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
                     >
                         {/* Input Header */}
                         <div className="relative flex items-center p-6 border-b border-white/5">
@@ -147,37 +126,51 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         </div>
 
                         {/* Results Area */}
-                        <div className="max-h-[60vh] overflow-y-auto p-4 custom-scrollbar">
-                            {!query.trim() ? (
+                        <div className="flex-1 md:max-h-[60vh] overflow-y-auto p-4 custom-scrollbar">
+                            {error ? (
+                                <div className="py-12 text-center text-red-400">
+                                    <p className="text-lg font-bold">Search temporarily unavailable</p>
+                                    <p className="text-sm mt-2 opacity-80">Our AI search engine is taking a quick break. Please try again in just a moment.</p>
+                                </div>
+                            ) : !query.trim() ? (
                                 <div className="py-12 text-center">
                                     <p className="text-muted text-sm">Type to search for services, tiers, or blog posts...</p>
                                 </div>
+                            ) : isLoading ? (
+                                <div className="py-12 flex flex-col items-center justify-center space-y-4">
+                                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                                    <p className="text-muted text-sm font-medium animate-pulse">Searching knowledge base...</p>
+                                </div>
                             ) : results.length > 0 ? (
                                 <div className="space-y-2">
-                                    {results.map((result, idx) => (
-                                        <Link
-                                            key={result.item.url}
-                                            href={result.item.url}
-                                            onClick={onClose}
-                                            className="group block p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
-                                        >
-                                            <div className="flex items-center justify-between gap-4">
-                                                <div>
-                                                    <h3 className="text-white font-bold text-lg group-hover:text-primary transition-colors">
-                                                        {highlightText(result.item.title, result.matches, 'title')}
-                                                    </h3>
-                                                    <p className="text-muted text-sm mt-1 leading-relaxed">
-                                                        {highlightText(result.item.description, result.matches, 'description')}
-                                                    </p>
+                                    {results.map((result, idx) => {
+                                        const item = result.item || result;
+                                        return (
+                                            <Link
+                                                key={item.url || idx}
+                                                href={item.url || '#'}
+                                                onClick={onClose}
+                                                className="group block p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
+                                            >
+                                                <div className="flex items-center justify-between gap-4">
+                                                    <div>
+                                                        <h3 className="text-white font-bold text-lg group-hover:text-primary transition-colors">
+                                                            {highlightText(item.title)}
+                                                        </h3>
+                                                        <p className="text-muted text-sm mt-1 leading-relaxed">
+                                                            {highlightText(item.description)}
+                                                        </p>
+                                                    </div>
+                                                    <CornerDownLeft className="w-5 h-5 text-muted opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
                                                 </div>
-                                                <CornerDownLeft className="w-5 h-5 text-muted opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
-                                            </div>
-                                        </Link>
-                                    ))}
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             ) : (
                                 <div className="py-12 text-center">
-                                    <p className="text-white/60">No pages found for "<span className="text-primary italic">{query}</span>"</p>
+                                    <p className="text-white/60 text-lg">No results found for "<span className="text-primary italic font-bold">{query}</span>"</p>
+                                    <p className="text-muted text-sm mt-2">Try searching with different keywords.</p>
                                 </div>
                             )}
                         </div>
