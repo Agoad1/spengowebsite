@@ -34,6 +34,8 @@ export const viewport = {
     themeColor: '#0a0a0a',
 };
 
+import { ToastProvider } from '@/components/ToastContext';
+
 export default function RootLayout({
     children,
 }: {
@@ -129,7 +131,11 @@ export default function RootLayout({
                     }}
                 />
             </head>
-            <body className="antialiased">{children}</body>
+            <body className="antialiased">
+                <ToastProvider>
+                    {children}
+                </ToastProvider>
+            </body>
         </html>
     );
 }

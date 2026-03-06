@@ -141,7 +141,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 - [x] Extend the existing `/admin` layout to include navigation for Sessions, Categories/Topics, Bookings, Clients, Calendar, and Reports.
 - [x] Build `/admin/categories-topics` to give the Admin full CRUD control over lookup tables.
 - [x] Build `/admin/sessions` ensuring the Admin can create and toggle session blocks easily (mimicking the blog creation workflow).
-- [ ] Implement the global Top-Left Toast Notification Context for the App.
+- [x] Implement the global Top-Left Toast Notification Context for the App.
 
 **Phase 3: Calendar & Availability Engine**
 - [ ] Build `/admin/calendar` to map available days/times and one-off exceptions.
