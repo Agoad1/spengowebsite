@@ -57,6 +57,8 @@ export default function AdminPage() {
     const [fetching, setFetching] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [userRole, setUserRole] = useState<string | null>(null);
+    const [roleLoading, setRoleLoading] = useState(true);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -72,9 +74,29 @@ export default function AdminPage() {
 
     useEffect(() => {
         if (session) {
-            fetchAllData();
+            checkUserRole(session.user.id);
+        } else {
+            setUserRole(null);
+            setRoleLoading(false);
         }
     }, [session]);
+
+    const checkUserRole = async (userId: string) => {
+        setRoleLoading(true);
+        const { data, error } = await supabase
+            .from('users')
+            .select('role')
+            .eq('id', userId)
+            .single();
+
+        if (!error && data) {
+            setUserRole(data.role);
+            if (data.role === 'admin') {
+                fetchAllData();
+            }
+        }
+        setRoleLoading(false);
+    };
 
     const fetchAllData = async () => {
         setFetching(true);
@@ -246,6 +268,45 @@ export default function AdminPage() {
                             {authLoading ? "Authenticating..." : "Sign In"}
                         </button>
                     </form>
+                </div>
+            </div>
+        );
+    }
+
+    if (roleLoading) {
+        return (
+            <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 font-jakarta">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    <p className="text-muted text-sm font-medium">Verifying access...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (userRole !== 'admin') {
+        return (
+            <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 font-jakarta">
+                <div className="w-full max-w-md bg-white/[0.03] border border-red-500/10 rounded-2xl p-8 backdrop-blur-xl text-center">
+                    <div className="flex justify-center mb-6">
+                        <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center border border-red-500/20">
+                            <Zap className="text-red-400 w-8 h-8" />
+                        </div>
+                    </div>
+                    <h1 className="text-2xl font-bold text-white mb-2 font-outfit">Access Denied</h1>
+                    <p className="text-muted text-sm mb-8">You do not have permission to view the admin dashboard.</p>
+
+                    <div className="flex flex-col gap-3">
+                        <Link href="/" className="w-full bg-white/5 border border-white/10 text-white font-bold py-3 rounded-xl hover:bg-white/10 transition-colors">
+                            Return Home
+                        </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="w-full bg-red-500/10 text-red-400 font-bold py-3 rounded-xl hover:bg-red-500/20 transition-colors"
+                        >
+                            Sign Out
+                        </button>
+                    </div>
                 </div>
             </div>
         );
