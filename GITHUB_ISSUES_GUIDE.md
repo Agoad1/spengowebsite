@@ -10,25 +10,30 @@ Before starting any task, the AI agent MUST:
 2.  **Identify Milestones**: Check for active milestones using `mcp_github-mcp-server_list_issues` (filtering by milestone) to understand where the current work fits into the broader roadmap.
 3.  **Sync Status**: If an issue exists, read its comments to understand the current state and any previous attempts or blockers.
 
-## 2. Issue Lifecycle Management
+## 2. Issue Lifecycle & Hierarchical Management
 
-### Phase A: Creation
-If no tracking issue exists for the current task:
-- **Requirement**: Create a new issue *before* writing any code.
+### Phase A: Creation & Hierarchy
+If no tracking issues exist for the current project:
+- **Master Issue**: Create a high-level master parent issue for the entire project or objective.
+- **Phase Issues**: Create parent tracking issues that group major milestones or phases together (e.g., `Phase 3`, `Phase 4`).
+- **Granular Sub-Issues**: Break down tasks into *as many granular sub-issues as possible*. Create individual issues for each tiny step within a Phase.
+- **Link Sub-Issues**: Use the `mcp_github-mcp-server_sub_issue_write` tool to officially link the granular sub-issues as children of their respective Phase Parent Issue.
 - **Format**:
-    - **Title**: `FEAT/FIX/CHORE: Short Description` (e.g., `FEAT: Implement Search Overlay UI`)
-    - **Body**: Include a clear objective, a checklist of sub-tasks, and reference any relevant implementation files (e.g., `IMPLEMENTATIONS_UPGRADESV5.md`).
-    - **Labels**: Apply relevant labels (e.g., `enhancement`, `bug`, `documentation`).
-    - **Assignee**: Assign to the current user (e.g., `Agoad1`).
+    - **Title**: `FEAT/FIX/CHORE: [Phase X] Short Description`
+    - **Body**: Include a clear objective, a Markdown checklist (`- [ ]`) of what needs to be done, and reference the local `.md` implementation plan.
+    - **Labels & Assignee**: Apply relevant labels and assign to the user (`Agoad1`).
 
-### Phase B: Execution & Updates
-- **Progress Reporting**: For tasks taking more than 15 minutes or involving multiple files, the agent MUST add a comment to the issue summarizing progress (e.g., "Updated navbar styling; moving to search logic implementation").
-- **Linking**: When creating files or commits, mention the issue number in the commit message or comment.
+### Phase B: Execution & The Hard Sync Rule
+- **The Hard Sync Rule**: For *any* completed step or code change, the agent MUST simultaneously update multiple lists before moving forward:
+    1. Check off the checklist item inside the GitHub Sub-Issue (by pulling the issue body, replacing `[ ]` with `[x]`, and calling `mcp_github-mcp-server_issue_write` with method `update`).
+    2. Check off the checklist item inside the GitHub Parent/Phase Issue (by pulling the issue body, replacing `[ ]` with `[x]`, and calling `mcp_github-mcp-server_issue_write` with method `update`).
+    3. Check off the checklist item inside the local markdown implementation plan `IMPLEMENTATION_[NAME].md`.
+- **Branching/Commits**: If branching, use `feat/issue-ID-description`. Commits should reference `[#ISSUE_ID]`.
 
 ### Phase C: Completion
-- **Verification**: Once the task is complete and verified, the agent MUST update the issue.
-- **Closing**: Use `mcp_github-mcp-server_issue_write` to set the state to `closed`.
-- **Final Summary**: Leave a final comment with the outcome, including any new files created or URLs affected.
+- **Auto-Commenting**: Upon completing a sub-issue, the agent MUST immediately leave a comment on the sub-issue detailing exactly what code changes were made to verify its completion.
+- **Closing**: Immediately set the state of the completed issue to `closed` using `issue_write` (method update).
+- **Phase/Master Roll-Up**: When all sub-issues in a Phase are closed, comment on and close the Phase Parent Issue. When all Phases are complete, proudly comment on and close the overall Master Issue.
 
 ## 3. Milestone Discipline
 - **Alignment**: Every issue created should be assigned to an active Milestone.
@@ -38,6 +43,7 @@ If no tracking issue exists for the current task:
 ## 4. Summary of Commands
 - **Check Issues**: `search_issues(query="repo:Agoad1/spengowebsite [KEYWORD]")`
 - **Create Issue**: `issue_write(method="create", title="...", body="...", labels=["..."])`
+- **Link Sub-Issue**: `sub_issue_write(method="add", issue_number=PARENT_ID, sub_issue_id=CHILD_ID)`
 - **Add Comment**: `add_issue_comment(issue_number=X, body="...")`
 - **Update/Close**: `issue_write(method="update", issue_number=X, state="closed")`
 

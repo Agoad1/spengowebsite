@@ -133,26 +133,28 @@ We will introduce or expand the following tables to manage bookings, history, an
 ## 6. Implementation Phases
 
 **Phase 1: Database & Role Infrastructure**
-1.  Deploy Supabase SQL migrations to create `users` (with roles), `booking_topics`, `session_categories`, `sessions`, `bookings`, `calendar_availability`, and `history_logs`.
-2.  Set up Row Level Security (RLS) ensuring admins can read/write everything, but users can only read/write their own data.
+- [x] Create all tables defined in Section 4 (Database Schema Overview).
+- [x] Deploy Supabase SQL migrations to create `users` (with roles), `booking_topics`, `session_categories`, `sessions`, `bookings`, `calendar_availability`, and `history_logs`.
+- [x] Set up Row Level Security (RLS) ensuring admins can read/write everything, but users can only read/write their own data.
 
 **Phase 2: Admin Dashboard Extension & Session Creator**
-1.  Extend the existing `/admin` layout to include navigation for Sessions, Categories/Topics, Bookings, Clients, Calendar, and Reports.
-2.  Build `/admin/categories-topics` to give the Admin full CRUD control over lookup tables.
-3.  Build `/admin/sessions` ensuring the Admin can create and toggle session blocks easily (mimicking the blog creation workflow).
-3.  Implement the global Top-Left Toast Notification Context for the App.
+- [x] Extend the existing `/admin` layout to include navigation for Sessions, Categories/Topics, Bookings, Clients, Calendar, and Reports.
+- [x] Build `/admin/categories-topics` to give the Admin full CRUD control over lookup tables.
+- [x] Build `/admin/sessions` ensuring the Admin can create and toggle session blocks easily (mimicking the blog creation workflow).
+- [x] Implement the global Top-Left Toast Notification Context for the App.
 
 **Phase 3: Calendar & Availability Engine**
-1.  Build `/admin/calendar` to map available days/times and one-off exceptions.
-2.  Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
+- [x] Build `/admin/calendar` to map available days/times and one-off exceptions.
+- [x] Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
 
 **Phase 4: Client Booking Experience**
-1.  Update the Main Landing page to fetch active sessions from Supabase.
-2.  Create the Booking Flow: Selecting an available time -> entering reason/notes -> clicking Book.
-3.  Handle logic to automatically upgrade a user's role to `client` upon their first successful booking.
+- [x] Update the Main Landing page to fetch active sessions from Supabase.
+- [x] Create the Booking Flow: Selecting an available time -> entering reason/notes -> clicking Book.
+- [x] Handle logic to automatically upgrade a user's role to `client` upon their first successful booking.
+- [x] Create mock/dummy sessions to test and display on the landing page and admin page.
 
 **Phase 5: Booking Management & Client Monitoring**
-1.  Establish `/admin/bookings` to approve/deny/manage bookings.
-2.  Establish `/admin/clients` to allow role manipulation (`user` to `client` handling, banning).
-3.  Create the User variant at `/dashboard/bookings` and `/dashboard/settings`.
-4.  Construct the `/admin/reports` page aggregating the `history_logs` and booking reasons.
+- [x] Establish `/admin/bookings` to approve/deny/manage bookings.
+- [x] Establish `/admin/clients` to allow role manipulation (`user` to `client` handling, banning).
+- [x] Create the User variant at `/dashboard/bookings` and `/dashboard/settings`.
+- [x] Construct the `/admin/reports` page aggregating the `history_logs` and booking reasons.
