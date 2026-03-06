@@ -156,5 +156,5 @@ We will introduce or expand the following tables to manage bookings, history, an
 **Phase 5: Booking Management & Client Monitoring**
 - [x] Establish `/admin/bookings` to approve/deny/manage bookings.
 - [x] Establish `/admin/clients` to allow role manipulation (`user` to `client` handling, banning).
-- [ ] Create the User variant at `/dashboard/bookings` and `/dashboard/settings`.
+- [x] Create the User variant at `/dashboard/bookings` and `/dashboard/settings`.
 - [ ] Construct the `/admin/reports` page aggregating the `history_logs` and booking reasons.
