@@ -145,7 +145,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 
 **Phase 3: Calendar & Availability Engine**
 - [x] Build `/admin/calendar` to map available days/times and one-off exceptions.
-- [ ] Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
+- [x] Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
 
 **Phase 4: Client Booking Experience**
 - [ ] Update the Main Landing page to fetch active sessions from Supabase.
