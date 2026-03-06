@@ -25,8 +25,8 @@ If no tracking issues exist for the current project:
 
 ### Phase B: Execution & The Hard Sync Rule
 - **The Hard Sync Rule**: For *any* completed step or code change, the agent MUST simultaneously update multiple lists before moving forward:
-    1. Check off the checklist item inside the GitHub Sub-Issue.
-    2. Check off the checklist item inside the GitHub Parent/Phase Issue.
+    1. Check off the checklist item inside the GitHub Sub-Issue (by pulling the issue body, replacing `[ ]` with `[x]`, and calling `mcp_github-mcp-server_issue_write` with method `update`).
+    2. Check off the checklist item inside the GitHub Parent/Phase Issue (by pulling the issue body, replacing `[ ]` with `[x]`, and calling `mcp_github-mcp-server_issue_write` with method `update`).
     3. Check off the checklist item inside the local markdown implementation plan `IMPLEMENTATION_[NAME].md`.
 - **Branching/Commits**: If branching, use `feat/issue-ID-description`. Commits should reference `[#ISSUE_ID]`.
 
