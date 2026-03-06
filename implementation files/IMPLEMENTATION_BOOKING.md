@@ -149,7 +149,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 
 **Phase 4: Client Booking Experience**
 - [x] Update the Main Landing page to fetch active sessions from Supabase.
-- [ ] Create the Booking Flow: Selecting an available time -> entering reason/notes -> clicking Book.
+- [x] Create the Booking Flow: Selecting an available time -> entering reason/notes -> clicking Book.
 - [ ] Handle logic to automatically upgrade a user's role to `client` upon their first successful booking.
 
 **Phase 5: Booking Management & Client Monitoring**
