@@ -148,7 +148,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 - [x] Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
 
 **Phase 4: Client Booking Experience**
-- [ ] Update the Main Landing page to fetch active sessions from Supabase.
+- [x] Update the Main Landing page to fetch active sessions from Supabase.
 - [ ] Create the Booking Flow: Selecting an available time -> entering reason/notes -> clicking Book.
 - [ ] Handle logic to automatically upgrade a user's role to `client` upon their first successful booking.
 

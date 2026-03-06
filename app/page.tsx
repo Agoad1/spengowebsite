@@ -5,6 +5,7 @@ import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
 import Contact from '@/components/Contact';
+import BookingSection from '@/components/BookingSection';
 import MobileCTA from '@/components/MobileCTA';
 import BackgroundBlobs from '@/components/BackgroundBlobs';
 import BackgroundEngine from '@/components/BackgroundEngine';
@@ -28,6 +29,7 @@ export default function Home() {
             <Hero />
             <Pricing />
             <FirstImpression />
+            <BookingSection />
             <Contact />
             <FAQ />
             <RiskReversal />
