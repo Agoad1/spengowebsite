@@ -139,7 +139,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 
 **Phase 2: Admin Dashboard Extension & Session Creator**
 - [x] Extend the existing `/admin` layout to include navigation for Sessions, Categories/Topics, Bookings, Clients, Calendar, and Reports.
-- [ ] Build `/admin/categories-topics` to give the Admin full CRUD control over lookup tables.
+- [x] Build `/admin/categories-topics` to give the Admin full CRUD control over lookup tables.
 - [ ] Build `/admin/sessions` ensuring the Admin can create and toggle session blocks easily (mimicking the blog creation workflow).
 - [ ] Implement the global Top-Left Toast Notification Context for the App.
 
