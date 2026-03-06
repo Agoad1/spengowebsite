@@ -144,7 +144,7 @@ We will introduce or expand the following tables to manage bookings, history, an
 - [x] Implement the global Top-Left Toast Notification Context for the App.
 
 **Phase 3: Calendar & Availability Engine**
-- [ ] Build `/admin/calendar` to map available days/times and one-off exceptions.
+- [x] Build `/admin/calendar` to map available days/times and one-off exceptions.
 - [ ] Implement timezone-aware API logic to build available slots (max 2 weeks out, ignoring slots that already have a `booking` to enforce 1-on-1).
 
 **Phase 4: Client Booking Experience**
