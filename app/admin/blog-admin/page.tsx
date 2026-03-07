@@ -355,7 +355,7 @@ export default function BlogAdminPage() {
                                                                     <Edit3 size={18} />
                                                                 </Link>
                                                                 <button
-                                                                    onClick={() => handleDelete(post.id)}
+                                                                    onClick={() => handleDelete(post.id, post.slug)}
                                                                     className="p-2 text-muted hover:text-red-400 transition-colors"
                                                                 >
                                                                     <Trash2 size={18} />
