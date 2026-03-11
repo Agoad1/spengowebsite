@@ -21,10 +21,10 @@ We are rebuilding the existing `WebsiteAuditForm` component and integrating it o
 - [x] Implement robust error and loading states (currently basic, make sure they feel premium).
 
 ## Phase 2: Page Integration
-- [ ] Open `app/page.tsx`.
-- [ ] Import `WebsiteAuditForm`.
-- [ ] Add the component immediately below the `<Hero />` component (before or replacing the top of `<Pricing />` depending on flow).
-- [ ] Wrap `<WebsiteAuditForm />` in a standard `<section>` container (e.g., `max-w-4xl mx-auto px-6 py-24`) to give it breathing room. Include a subtle gradient background or blobs if fitting.
+- [x] Open `app/page.tsx`.
+- [x] Import `WebsiteAuditForm`.
+- [x] Add the component immediately below the `<Hero />` component (before or replacing the top of `<Pricing />` depending on flow).
+- [x] Wrap `<WebsiteAuditForm />` in a standard `<section>` container (e.g., `max-w-4xl mx-auto px-6 py-24`) to give it breathing room. Include a subtle gradient background or blobs if fitting.
 
 ## Phase 3: Testing & Polish
 - [ ] Compile the application locally (`npm run dev`) and test the entire progressive flow by clicking through all 5 steps.
