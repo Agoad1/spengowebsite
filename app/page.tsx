@@ -5,7 +5,6 @@ import Hero from '@/components/Hero';
 import WebsiteAuditForm from '@/components/WebsiteAuditForm';
 import Footer from '@/components/Footer';
 import CursorGlow from '@/components/CursorGlow';
-import Contact from '@/components/Contact';
 import BookingSection from '@/components/BookingSection';
 import MobileCTA from '@/components/MobileCTA';
 import BackgroundBlobs from '@/components/BackgroundBlobs';
@@ -39,7 +38,6 @@ export default function Home() {
             <Pricing />
             <FirstImpression />
             <BookingSection />
-            <Contact />
             <FAQ />
             <RiskReversal />
             <Footer />

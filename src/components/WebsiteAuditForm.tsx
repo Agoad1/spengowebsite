@@ -18,6 +18,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { trackClick } from '@/lib/analytics';
 
 type FormData = {
   business_type: string;
@@ -157,6 +158,7 @@ export default function WebsiteAuditForm() {
       setError('Something went wrong. Please try again.');
       console.error(submitError);
     } else {
+      trackClick('audit_submit');
       setSubmitted(true);
     }
   };
