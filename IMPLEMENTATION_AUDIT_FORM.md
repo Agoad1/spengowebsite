@@ -27,9 +27,9 @@ We are rebuilding the existing `WebsiteAuditForm` component and integrating it o
 - [x] Wrap `<WebsiteAuditForm />` in a standard `<section>` container (e.g., `max-w-4xl mx-auto px-6 py-24`) to give it breathing room. Include a subtle gradient background or blobs if fitting.
 
 ## Phase 3: Testing & Polish
-- [ ] Compile the application locally (`npm run dev`) and test the entire progressive flow by clicking through all 5 steps.
-- [ ] Validate that data is successfully submitted to the `audits` table in Supabase.
-- [ ] Ensure mobile readability (especially text sizes and card grids for steps 1-4).
+- [x] Compile the application locally (`npm run dev`) and test the entire progressive flow by clicking through all 5 steps.
+- [x] Validate that data is successfully submitted to the `audits` table in Supabase.
+- [x] Ensure mobile readability (especially text sizes and card grids for steps 1-4).
 
 ## Issue Management (GITHUB_ISSUES_GUIDE.md)
 Following project conventions, we must construct the following tracking issues in GitHub, using milestone tracking if defined.
