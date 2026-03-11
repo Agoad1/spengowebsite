@@ -399,7 +399,16 @@ export default function WebsiteAuditForm() {
             />
           </div>
 
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3 mt-4"
+            >
+              <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-red-400 text-[13px] font-medium leading-relaxed">{error}</p>
+            </motion.div>
+          )}
 
           <button
             type="submit"
