@@ -185,7 +185,7 @@ export default function WebsiteAuditForm() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-        className="py-16 text-center"
+        className="py-16 text-center flex flex-col items-center justify-center min-h-[400px]"
       >
         <div className="relative inline-block mb-8">
           <div className="absolute inset-0 bg-cyan/20 blur-2xl rounded-full" />
@@ -217,7 +217,7 @@ export default function WebsiteAuditForm() {
   ].filter(Boolean).length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 min-h-[400px]">
       {/* Header */}
       <div>
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-4">
