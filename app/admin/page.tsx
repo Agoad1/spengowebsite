@@ -20,19 +20,23 @@ import {
     BarChart3,
     Activity,
     MousePointer2,
-    FileText
+    FileText,
+    TrendingUp,
+    AlertTriangle
 } from "lucide-react";
 import Link from "next/link";
 import AdminSidebar from "@/components/AdminSidebar";
 
-interface Submission {
+interface Audit {
     id: string;
     created_at: string;
     name: string;
     email: string;
     website_url: string;
     business_type: string;
-    message: string;
+    biggest_problem: string;
+    traffic_source: string;
+    revenue_range: string;
     status: 'new' | 'contacted' | 'in progress' | 'closed';
 }
 
@@ -52,7 +56,7 @@ export default function AdminPage() {
     const [authLoading, setAuthLoading] = useState(false);
     const [authError, setAuthError] = useState("");
 
-    const [submissions, setSubmissions] = useState<Submission[]>([]);
+    const [submissions, setSubmissions] = useState<Audit[]>([]);
     const [analyticsData, setAnalyticsData] = useState<AnalyticsEvent[]>([]);
     const [fetching, setFetching] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -106,7 +110,7 @@ export default function AdminPage() {
 
     const fetchSubmissions = async () => {
         const { data, error } = await supabase
-            .from("submissions")
+            .from("audits")
             .select("*")
             .order("created_at", { ascending: false });
 
@@ -132,7 +136,7 @@ export default function AdminPage() {
 
     const updateStatus = async (id: string, newStatus: string) => {
         const { error } = await supabase
-            .from('submissions')
+            .from('audits')
             .update({ status: newStatus })
             .eq('id', id);
 
@@ -489,7 +493,7 @@ function StatCard({ label, value, icon, color }: { label: string, value: string 
 }
 
 function SubmissionRow({ sub, isExpanded, onToggle, onStatusChange }: {
-    sub: Submission,
+    sub: Audit,
     isExpanded: boolean,
     onToggle: () => void,
     onStatusChange: (status: string) => void
@@ -586,13 +590,33 @@ function SubmissionRow({ sub, isExpanded, onToggle, onStatusChange }: {
                                     <p className="text-white font-medium">{sub.business_type || "No segment specified"}</p>
                                 </div>
                             </div>
-                            <div className="space-y-3">
-                                <div className="flex items-center gap-2 text-muted text-[10px] font-bold uppercase tracking-widest">
-                                    <MessageSquare size={12} className="text-primary" />
-                                    Pain Points & Project Details
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-muted text-[10px] font-bold uppercase tracking-widest">
+                                        <Activity size={12} className="text-primary" />
+                                        Traffic Source
+                                    </div>
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium">
+                                        {sub.traffic_source || "Not specified"}
+                                    </div>
                                 </div>
-                                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-muted leading-relaxed text-[15px] italic">
-                                    "{sub.message}"
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-muted text-[10px] font-bold uppercase tracking-widest">
+                                        <TrendingUp size={12} className="text-primary" />
+                                        Revenue Range
+                                    </div>
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-emerald-400 font-bold">
+                                        {sub.revenue_range || "Not specified"}
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-muted text-[10px] font-bold uppercase tracking-widest">
+                                        <AlertTriangle size={12} className="text-primary" />
+                                        Biggest Problem
+                                    </div>
+                                    <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 text-red-200 font-medium">
+                                        {sub.biggest_problem || "Not specified"}
+                                    </div>
                                 </div>
                             </div>
                         </div>
