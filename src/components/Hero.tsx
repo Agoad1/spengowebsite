@@ -21,6 +21,10 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      
+      {/* Hero Background Image */}
+      <div style={{ backgroundImage: `url('/images/hero.png')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" />
+
       {/* Positioned under navbar links */}
       <div className="absolute top-24 left-0 right-0 z-20 pointer-events-none hidden lg:block">
         <div className="max-w-7xl mx-auto px-6 flex justify-end">
@@ -38,7 +42,6 @@ export default function Hero() {
             }}
           >
             <div className="relative group">
-              {/* Subtle Ambient Glow */}
               <motion.div
                 animate={{
                   opacity: [0.3, 0.5, 0.3],
@@ -51,8 +54,6 @@ export default function Hero() {
                 }}
                 className="absolute inset-0 bg-primary/30 blur-2xl rounded-full -z-10"
               />
-
-              {/* The Badge */}
               <div className="relative flex items-center gap-4 bg-white/[0.05] backdrop-blur-xl border border-white/10 px-6 py-3.5 rounded-2xl">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-50"></span>
@@ -116,7 +117,7 @@ export default function Hero() {
                 </div>
               </MagneticButton>
 
-              <a
+              
                 href="#pricing"
                 onClick={() => trackClick('hero_how_it_works')}
                 className="text-muted hover:text-body transition-colors text-sm font-medium label-tracking"
