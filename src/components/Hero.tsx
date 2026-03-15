@@ -23,7 +23,7 @@ export default function Hero() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       
       {/* Hero Background Image */}
-      <div style={{ backgroundImage: `url('/images/hero.png?t=1773549455195')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" />
+      <div style={{ backgroundImage: `url('/images/hero.png')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" />
 
       {/* Positioned under navbar links */}
       <div className="absolute top-24 left-0 right-0 z-20 pointer-events-none hidden lg:block">
@@ -105,7 +105,7 @@ export default function Hero() {
                 People don't browse anymore. They land on your site with <span className="soft-highlight">intent to buy</span>.
               </p>
               <p className="mt-4 text-[18px] font-normal leading-[1.6] text-[#a8a8a8] max-w-[700px]">
-                If it&rsquo;s slow, outdated, or confusing, they&rsquo;re gone in seconds. We build <span className="soft-highlight">fast, modern</span> sites that make buying <span className="soft-highlight">easy</span> and earn trust instantly.
+                If it's slow, outdated, or confusing, they're gone in seconds. We build <span className="soft-highlight">fast, modern</span> sites that make buying <span className="soft-highlight">easy</span> and earn trust instantly.
               </p>
             </div>
 
@@ -113,7 +113,7 @@ export default function Hero() {
               <MagneticButton href="#start" onClick={() => trackClick('hero_start_audit')}>
                 <div className="relative inline-flex items-center gap-2 bg-primary text-white font-jakarta font-semibold px-8 py-4 rounded-lg text-base btn-jump">
                   Start Your Free Audit
-                  <span aria-hidden="true" className="text-lg">&rarr;</span>
+                  <span aria-hidden="true" className="text-lg">→</span>
                 </div>
               </MagneticButton>
 
@@ -122,7 +122,7 @@ export default function Hero() {
                 onClick={() => trackClick('hero_how_it_works')}
                 className="text-muted hover:text-body transition-colors text-sm font-medium label-tracking"
               >
-                <span className="glow-noise italic">HOW IT WORKS &darr;</span>
+                <span className="glow-noise italic">HOW IT WORKS ↓</span>
               </a>
             </div>
           </motion.div>
