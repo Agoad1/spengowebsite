@@ -23,7 +23,7 @@ export default function Hero() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       
       {/* Hero Background Image */}
-      <div style={{ backgroundImage: `url('/images/hero.png')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" />
+      <div style={{ backgroundImage: `url('/images/hero-2026-03-15T17:12:48.645-04:00.png')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" />
 
       {/* Positioned under navbar links */}
       <div className="absolute top-24 left-0 right-0 z-20 pointer-events-none hidden lg:block">
