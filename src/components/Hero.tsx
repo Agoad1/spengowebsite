@@ -117,7 +117,7 @@ export default function Hero() {
                 </div>
               </MagneticButton>
 
-              
+              <a
                 href="#pricing"
                 onClick={() => trackClick('hero_how_it_works')}
                 className="text-muted hover:text-body transition-colors text-sm font-medium label-tracking"
