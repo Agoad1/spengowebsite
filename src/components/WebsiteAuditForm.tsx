@@ -152,13 +152,36 @@ export default function WebsiteAuditForm() {
       },
     ]);
 
-    setLoading(false);
-
     if (submitError) {
+      setLoading(false);
       setError('Something went wrong. Please try again.');
       console.error(submitError);
     } else {
       trackClick('audit_submit');
+
+      // Trigger n8n webhook alert
+      try {
+        await fetch('https://goadlabs.app.n8n.cloud/webhook/9d7ed14d-3768-4d16-95f9-7940493b3a2d', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            business_type: formData.business_type,
+            biggest_problem: formData.biggest_problem,
+            traffic_source: formData.traffic_source,
+            revenue_range: formData.revenue_range,
+            name: formData.name,
+            email: formData.email,
+            website_url: formData.website_url || null,
+            submitted_at: new Date().toISOString(),
+          }),
+        });
+      } catch (webhookError) {
+        console.error('Webhook Error:', webhookError);
+      }
+
+      setLoading(false);
       setSubmitted(true);
     }
   };
@@ -239,13 +262,12 @@ export default function WebsiteAuditForm() {
           return (
             <div
               key={i}
-              className={`h-1 rounded-full transition-all duration-500 ${
-                isAnswered
+              className={`h-1 rounded-full transition-all duration-500 ${isAnswered
                   ? 'bg-primary w-8'
                   : isCurrent
-                  ? 'bg-primary/50 w-6'
-                  : 'bg-white/10 w-4'
-              }`}
+                    ? 'bg-primary/50 w-6'
+                    : 'bg-white/10 w-4'
+                }`}
             />
           );
         })}
@@ -285,11 +307,10 @@ export default function WebsiteAuditForm() {
                     key={value}
                     type="button"
                     onClick={() => handleCardSelect(step.id, value, stepIndex)}
-                    className={`relative text-left p-4 rounded-xl border transition-all duration-300 group cursor-pointer ${
-                      isSelected
+                    className={`relative text-left p-4 rounded-xl border transition-all duration-300 group cursor-pointer ${isSelected
                         ? 'bg-primary/10 border-primary/50 shadow-[0_0_24px_rgba(168,85,247,0.12)]'
                         : 'bg-white/[0.02] border-white/10 hover:bg-white/[0.05] hover:border-white/20'
-                    }`}
+                      }`}
                   >
                     {/* Checkmark badge when selected */}
                     {isSelected && (
@@ -302,25 +323,22 @@ export default function WebsiteAuditForm() {
                     {Icon ? (
                       <>
                         <div
-                          className={`mb-3 transition-colors duration-300 ${
-                            isSelected ? 'text-primary' : 'text-muted group-hover:text-white/70'
-                          }`}
+                          className={`mb-3 transition-colors duration-300 ${isSelected ? 'text-primary' : 'text-muted group-hover:text-white/70'
+                            }`}
                         >
                           <Icon className="w-5 h-5" />
                         </div>
                         <div
-                          className={`font-outfit font-semibold text-sm mb-1 transition-colors duration-300 ${
-                            isSelected ? 'text-white' : 'text-white/80'
-                          }`}
+                          className={`font-outfit font-semibold text-sm mb-1 transition-colors duration-300 ${isSelected ? 'text-white' : 'text-white/80'
+                            }`}
                         >
                           {label}
                         </div>
                       </>
                     ) : (
                       <div
-                        className={`font-outfit font-bold text-2xl mb-1 transition-colors duration-300 ${
-                          isSelected ? 'text-primary' : 'text-white'
-                        }`}
+                        className={`font-outfit font-bold text-2xl mb-1 transition-colors duration-300 ${isSelected ? 'text-primary' : 'text-white'
+                          }`}
                       >
                         {label}
                       </div>

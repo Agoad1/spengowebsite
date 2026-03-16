@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 import { trackClick } from '@/lib/analytics';
-
+import InlineChatWidget from './InlineChatWidget';
 export default function Hero() {
   const [location, setLocation] = useState('across the country');
 
@@ -124,6 +124,10 @@ export default function Hero() {
               >
                 <span className="glow-noise italic">HOW IT WORKS ↓</span>
               </a>
+            </div>
+
+            <div className="mt-16 w-full max-w-3xl border-t border-white/5 pt-12">
+              <InlineChatWidget />
             </div>
           </motion.div>
         </div>
