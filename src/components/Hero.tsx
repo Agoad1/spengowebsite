@@ -1,12 +1,29 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 import { trackClick } from '@/lib/analytics';
 import InlineChatWidget from './InlineChatWidget';
 export default function Hero() {
   const [location, setLocation] = useState('across the country');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    // Don't trigger if clicked on interactable elements
+    const isInteractive = (e.target as HTMLElement).closest('button, a, input, select, textarea');
+    if (isInteractive) return;
+
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   useEffect(() => {
     fetch('https://ipapi.co/json/')
@@ -20,10 +37,18 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" onClick={togglePlay} className="relative min-h-screen flex items-center justify-center overflow-hidden cursor-pointer">
       
-      {/* Hero Background Image */}
-      <div style={{ backgroundImage: `url('/images/hero-2026-03-15T17:31:29.496-04:00.png')` }} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70" />
+      {/* Hero Background Video */}
+      <video
+        ref={videoRef}
+        src="/videos/hero-background.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-70"
+      />
 
       {/* Positioned under navbar links */}
       <div className="absolute top-24 left-0 right-0 z-20 pointer-events-none hidden lg:block">
