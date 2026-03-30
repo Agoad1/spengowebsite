@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FluxFrame - Section Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a1a1a;
+      --primary: #a855f7;
+      --secondary: #06b6d4;
+      --text-main: #ffffff;
+      --text-muted: #a0a0a0;
+      --card-bg: rgba(255, 255, 255, 0.015);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --primary-glow: rgba(168, 85, 247, 0.3);
+      --shadow-glow: rgba(168, 85, 247, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo-container {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .app-title {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .column-title {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .column-subtitle {
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .builder-card {
+      cursor: grab;
+    }
+
+    .builder-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary-glow);
+      box-shadow: 0 4px 20px var(--shadow-glow);
+    }
+
+    .builder-card:active {
+      cursor: grabbing;
+    }
+
+    .builder-card.dragging {
+      opacity: 0.5;
+      transform: scale(1.02);
+      border-color: var(--primary-glow);
+      box-shadow: 0 8px 30px var(--shadow-glow);
+      z-index: 10;
+    }
+    
+    .builder-card.drag-over {
+      border-top: 2px solid var(--primary);
+    }
+
+    .drag-handle {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-right: 1rem;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      min-width: 44px;
+      justify-content: center;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    .card-content {
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .badge-number {
+      background: var(--primary);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 1rem;
+    }
+
+    .preview-card {
+      background: rgba(0, 0, 0, 0.2);
+      border-left: 3px solid var(--secondary);
+    }
+
+    .preview-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .builder-list {
+      min-height: 400px;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .btn-reset {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+      border-color: var(--primary-glow);
+      box-shadow: 0 4px 15px var(--shadow-glow);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">✨</div>
+      <h1 class="app-title">FluxFrame</h1>
+      <p class="tagline">Build stunning layouts with our futuristic drag-and-drop section builder. Reorder, visualize, and perfect your page structure in real-time.</p>
+    </header>
+
+    <div class="layout-grid">
+      <!-- Builder Column -->
+      <div class="column">
+        <h2 class="column-title">Section Builder</h2>
+        <p class="column-subtitle">Drag and drop to reorder sections</p>
+        <div id="builder-list" class="builder-list"></div>
+      </div>
+
+      <!-- Preview Column -->
+      <div class="column">
+        <h2 class="column-title">Live Preview</h2>
+        <p class="column-subtitle">Your page structure</p>
+        <div id="preview-list" class="preview-list"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btn-reset" class="btn-reset">
+        🔄 Reset Layout
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const defaultSections = [
+      { id: 'hero', icon: '⚡', name: 'Hero Section', description: 'Welcome visitors with a compelling headline and call-to-action' },
+      { id: 'how-it-works', icon: '🔄', name: 'How It Works', description: 'Show your 3-step process so visitors know what to expect' },
+      { id: 'first-impression', icon: '👁️', name: 'First Impression', description: 'Prove visitors can find what they need in 30 seconds' },
+      { id: 'faq', icon: '❓', name: 'FAQ', description: 'Answer common questions to reduce support load' },
+      { id: 'risk-reversal', icon: '🛡️', name: 'Risk Reversal', description: 'Remove buying hesitation with guarantees and trust signals' },
+      { id: 'contact', icon: '📋', name: 'Contact / Audit Form', description: 'Capture leads with a conversion-focused intake form' }
+    ];
+
+    let sections = [];
+    const SAVED_KEY = "fluxframe-sections";
+
+    const builderList = document.getElementById('builder-list');
+    const previewList = document.getElementById('preview-list');
+    const btnReset = document.getElementById('btn-reset');
+
+    function init() {
+      const saved = localStorage.getItem(SAVED_KEY);
+      if (saved) {
+        try {
+          const savedIds = JSON.parse(saved);
+          // Restore based on saved IDs, maintaining original order of saved IDs
+          sections = savedIds.map(id => defaultSections.find(s => s.id === id)).filter(Boolean);
+          // Add any missing new sections at the end
+          const missing = defaultSections.filter(ds => !savedIds.includes(ds.id));
+          sections = [...sections, ...missing];
+        } catch(e) {
+          sections = [...defaultSections];
+        }
+      } else {
+        sections = [...defaultSections];
+      }
+      render();
+    }
+
+    function saveOrder() {
+      const order = sections.map(s => s.id);
+      localStorage.setItem(SAVED_KEY, JSON.stringify(order));
+    }
+
+    function render() {
+      renderBuilder();
+      renderPreview();
+    }
+
+    let draggedIndex = null;
+
+    function renderBuilder() {
+      builderList.innerHTML = '';
+      sections.forEach((section, index) => {
+        const card = document.createElement('div');
+        card.className = 'card builder-card';
+        card.draggable = true;
+        card.dataset.index = index;
+
+        card.innerHTML = `
+          <div class="drag-handle">⠿</div>
+          <div class="card-icon">${section.icon}</div>
+          <div class="card-content">
+            <div class="card-title">${section.name}</div>
+            <div class="card-desc">${section.description}</div>
+          </div>
+          <div class="badge-number">${index + 1}</div>
+        `;
+
+        // Drag events
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('drop', handleDrop);
+        card.addEventListener('dragenter', handleDragEnter);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('dragend', handleDragEnd);
+
+        builderList.appendChild(card);
+      });
+    }
+
+    function renderPreview() {
+      previewList.innerHTML = '';
+      sections.forEach((section, index) => {
+        const card = document.createElement('div');
+        card.className = 'card preview-card';
+        card.innerHTML = `
+          <div class="card-title" style="min-width: 140px; margin-right: 1rem; color: var(--secondary)">
+            ${index + 1}. ${section.name}
+          </div>
+          <div class="card-icon" style="font-size: 1.2rem; padding: 0.3rem;">${section.icon}</div>
+          <div class="card-content">
+            <div class="card-desc">${section.description}</div>
+          </div>
+        `;
+        previewList.appendChild(card);
+      });
+    }
+
+    // Drag handlers
+    function handleDragStart(e) {
+      draggedIndex = parseInt(this.dataset.index);
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', draggedIndex);
+      setTimeout(() => this.classList.add('dragging'), 0);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDragEnter(e) {
+      e.preventDefault();
+      if(this.dataset.index != draggedIndex) {
+        this.classList.add('drag-over');
+      }
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.stopPropagation();
+      const dropIndex = parseInt(this.dataset.index);
+      if (draggedIndex !== dropIndex) {
+        // Reorder array
+        const item = sections.splice(draggedIndex, 1)[0];
+        sections.splice(dropIndex, 0, item);
+        saveOrder();
+        render(); // Re-render both lists
+      }
+      return false;
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+      document.querySelectorAll('.builder-card').forEach(c => c.classList.remove('drag-over'));
+      draggedIndex = null;
+    }
+
+    // Reset layout
+    btnReset.addEventListener('click', () => {
+      localStorage.removeItem(SAVED_KEY);
+      sections = [...defaultSections];
+      render();
+    });
+
+    // Start
+    init();
+  </script>
+</body>
+</html>

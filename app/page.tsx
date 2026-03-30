@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import WebsiteAuditForm from '@/components/WebsiteAuditForm';
@@ -15,8 +16,40 @@ import FirstImpression from '@/components/FirstImpression';
 import FAQ from '@/components/FAQ';
 import SidebarNav from '@/components/SidebarNav';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import Process from '@/components/Process';
 
 export default function Home() {
+    const [mounted, setMounted] = useState(false);
+    const [sectionOrder, setSectionOrder] = useState<string[]>([]);
+
+    useEffect(() => {
+        setMounted(true);
+        const saved = localStorage.getItem('fluxframe-sections');
+        if (saved) {
+            try {
+                setSectionOrder(JSON.parse(saved));
+            } catch (e) {
+                // Ignoring parse errors
+            }
+        }
+    }, []);
+
+    const componentsMap: Record<string, React.ReactNode> = {
+        'hero': <Hero key="hero" />,
+        'how-it-works': <Process key="how-it-works" />,
+        'first-impression': <FirstImpression key="first-impression" />,
+        'faq': <FAQ key="faq" />,
+        'risk-reversal': <RiskReversal key="risk-reversal" />,
+        'contact': (
+            <section key="contact" id="contact" className="relative z-20 py-24 px-6 overflow-hidden">
+                <div className="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -z-10 w-[80%] h-[80%] mx-auto" />
+                <div className="max-w-4xl mx-auto bg-white/[0.02] border border-white/5 backdrop-blur-3xl rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(168,85,247,0.05)] relative">
+                    <WebsiteAuditForm />
+                </div>
+            </section>
+        )
+    };
+
     return (
         <div className="relative z-10 min-h-screen">
             <AnalyticsTracker />
@@ -26,21 +59,32 @@ export default function Home() {
             <MobileCTA />
             <SidebarNav />
             <Navbar />
-            <Hero />
             
-            <Pricing />
-            <FirstImpression />
-            <BookingSection />
-            
-            <section id="contact" className="relative z-20 py-24 px-6 overflow-hidden">
-                <div className="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -z-10 w-[80%] h-[80%] mx-auto" />
-                <div className="max-w-4xl mx-auto bg-white/[0.02] border border-white/5 backdrop-blur-3xl rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(168,85,247,0.05)] relative">
-                    <WebsiteAuditForm />
-                </div>
-            </section>
+            {!mounted || sectionOrder.length === 0 ? (
+                <>
+                    <Hero />
+                    <Pricing />
+                    <FirstImpression />
+                    <BookingSection />
+                    <section id="contact" className="relative z-20 py-24 px-6 overflow-hidden">
+                        <div className="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -z-10 w-[80%] h-[80%] mx-auto" />
+                        <div className="max-w-4xl mx-auto bg-white/[0.02] border border-white/5 backdrop-blur-3xl rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(168,85,247,0.05)] relative">
+                            <WebsiteAuditForm />
+                        </div>
+                    </section>
+                    <FAQ />
+                    <RiskReversal />
+                </>
+            ) : (
+                <>
+                    {sectionOrder.map(id => componentsMap[id])}
+                    
+                    {/* Render existing sections that aren't mapped in fluxframe but belong on the page */}
+                    {!sectionOrder.includes('pricing') && <Pricing key="pricing" />}
+                    {!sectionOrder.includes('booking') && <BookingSection key="booking" />}
+                </>
+            )}
 
-            <FAQ />
-            <RiskReversal />
             <Footer />
         </div>
     );

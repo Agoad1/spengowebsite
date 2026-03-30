@@ -11,7 +11,8 @@ import {
     CheckSquare,
     Clock,
     BarChart3,
-    BookOpen
+    BookOpen,
+    Layout
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -29,6 +30,7 @@ export default function AdminSidebar({ currentPath, onLogout }: AdminSidebarProp
         { name: "Calendar", href: "/admin/calendar", icon: <Calendar size={18} /> },
         { name: "Reports", href: "/admin/reports", icon: <BarChart3 size={18} /> },
         { name: "Blog Admin", href: "/admin/blog-admin", icon: <FileText size={18} /> },
+        { name: "Section Builder", href: "/admin/fluxframe", icon: <Layout size={18} /> },
     ];
 
     return (
